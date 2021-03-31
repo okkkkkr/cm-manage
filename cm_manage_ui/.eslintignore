@@ -1,0 +1,9 @@
+build/*.js
+src/assets
+public
+dist
+<<<<<<< HEAD
+*
+=======
+*
+>>>>>>> a681bfa23f8f201fb16eb3902020fb091ea0fa62
