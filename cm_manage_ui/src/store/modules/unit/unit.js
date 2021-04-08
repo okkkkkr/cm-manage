@@ -1,8 +1,9 @@
 import mutations from './mutation'
 import actions from './action'
 
-const state = {  }
-
+const state = {
+    test_state: 'TEXT_STATE'
+}
 mutations,
 actions
 

@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
 
-const G2 = require('@antv/g2')
+const G2 = require('@antv/g2plot')
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })

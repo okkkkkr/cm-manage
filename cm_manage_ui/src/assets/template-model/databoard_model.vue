@@ -55,7 +55,7 @@ import subTitleBox from "../../components/plug/sub-title-box.vue";
 
 export default {
   components: { subTitleBox },
-  name: "Databoard",
+  name: "Unit",
   computed: {},
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
   },
   created() {},
   methods: {
-    ...mapActions("databoard", ["TEST_AXIOS"]), // （param1: 路径，param2: 函数名）
+    ...mapActions("Unit", ["TEST_AXIOS"]), // （param1: 路径，param2: 函数名）
 
     test() {
       const _self = this;

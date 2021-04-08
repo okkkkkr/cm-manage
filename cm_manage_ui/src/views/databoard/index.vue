@@ -1,128 +1,117 @@
 <template>
-  <div class="dashboard-container">
-    {{ name }}
-    <el-row :gutter="20" class="board_wrapper">
-      <el-col :span="18" class="content_wrapper">
-        <div class="content_left" style="border: 1px solid red">
-          <div id="minor_board">
-            <el-row :gutter="20" class="board_wrapper">
-              <el-col class="content_wrapper" :span="8">
-                <sub-title-box style="border: 2px solid green" title="板块1" height="20%" size="big" weight="true" line="true">
-                  <div slot="titleContent">
-                    <span>3,524.42</span>
-                    <span>↓</span>
-                    <span>0.55%</span>
-                  </div>
-                  <div slot="mainContent" style="height:100%">
-                    <img style="width: 100%; height: 100%;" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3445537515,3371307135&fm=26&gp=0.jpg" alt="">
-                  </div>
-                  
-                </sub-title-box>
-              </el-col>
-              <el-col :span="8" class="content_wrapper">
-                <sub-title-box style="border: 2px solid green" title="板块2" height="20%" size="big" weight="true">
-
-                </sub-title-box>
-              </el-col>
-              <el-col :span="8" class="content_wrapper">
-                <sub-title-box style="border: 2px solid green" title="板块3" height="20%" size="big" weight="true">
-
-                </sub-title-box>
-              </el-col>
-            </el-row>
-            
-          </div>
-          <div id="main_board" style="border: 1px solid blue">
-            <sub-title-box style="border: 2px solid green" title="主视图" height="10%" size="big" weight="true">
-
-            </sub-title-box>
-          </div>
-        </div>
-      </el-col>
-      <el-col :span="6" class="content_wrapper">
-        <div class="content_right" style="border: 1px solid red">
-          <div id="sider_top" style="border: 1px solid yellow"></div>
-          <div class    ="dash_box" style="border: 1px solid green"></div>
-          <div id="sider_down" style="border: 1px solid blue"></div>
-        </div>
-      </el-col>
-    </el-row>
-  </div>
+  <el-row>
+    <el-col :span="12">
+      <div id="container"></div>
+    </el-col>
+    <el-col :span="12"> </el-col>
+  </el-row>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 import { mapActions, mapMutations } from "vuex";
-import subTitleBox from "../../components/plug/sub-title-box.vue";
 
 export default {
-  components: { subTitleBox },
-  name: "Databoard",
+  name: "Unit",
   computed: {},
   data() {
     return {
       name: "首页",
-      userList: {},
+      t1: [],
+      count: 0,
     };
   },
   created() {},
   methods: {
-    ...mapActions("databoard", ["TEST_AXIOS"]), // （param1: 路径，param2: 函数名）
+    ...mapActions("unit", ["TEST_AXIOS"]), // （param1: 路径，param2: 函数名）
 
-    test() {
-      const _self = this;
-      this.TEST_AXIOS()
-        .then((res) => {
-          _self.name = "Finish Successful";
-        })
-        .catch((error) => {
-          console.log(error);
-          _self.name = "Finish But Failure";
+    fetchData() {
+      const _this = this;
+      fetch(
+        "http://push2.eastmoney.com/api/qt/kamtbs.rtmin/get?fields1=f1,f3&fields2=f51,f62"
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          for (let i in data.data.s2n) {
+            let minutes = data.data.s2n[i].split(",")[0];
+            let value = parseInt(data.data.s2n[i].split(",")[1]) / 10000;
+            let item = {
+              time: minutes,
+              value: value,
+            };
+            _this.t1.push(item);
+          }
+
+          console.log(_this.t1)
         });
+    },
+           
+    initG2() {
+      var chart = new this.$G2.Chart({
+        container: "container",
+        autoFit: true,
+        height: 400,
+        // padding: [20, 0, 50, 100],
+      });
+      this.t1 = [];
+      // this.fetchData();
+
+      // setInterval(() => {
+      //   this.fetchData();
+      // }, 60000);
+
+      //chageData属性改变数据源并重绘
+      setInterval(() => {
+        chart.changeData(this.t1);
+        // chart.repaint();
+      }, 61000);
+
+      setTimeout(() => {
+        chart.data(this.t1);
+        // 线条作色(画线条)
+        chart.scale({
+          time: {
+            tickCount: 10,
+          },
+          value: {
+            nice: true,
+          },
+        });
+        chart.axis("time", {
+          label: {
+            formatter: (text) => {
+              return text;
+            },
+          },
+        });
+
+        chart.line().position("time*value");
+        // 分段颜色
+        chart.annotation().regionFilter({
+          top: true,
+          start: ["min", "max"],
+          end: ["max", 0],
+          color: "#f5222d",
+        });
+
+        chart.annotation().regionFilter({
+          top: true,
+          start: ["min", 0],
+          end: ["max", "min"],
+          color: "#2fc25b",
+        });
+        // 最后一步渲染
+        chart.render();
+
+        return this;
+      }, 200);
     },
   },
   mounted() {
-    this.test();
+    var _this = this;
+    this.$nextTick(() => {
+      _this.initG2();
+    });
   },
 };
 </script>
 
-<style lang="less" scoped>
-.dashboard {
-  &-container {
-    height: 100vh;
-    margin: 30px;
-  }
-}
-
-.board_wrapper,
-.content_wrapper {
-  height: 100%;
-}
-
-.content_left {
-  height: 100%;
-  #minor_board {
-    height: 30%;
-  }
-
-  #main_board {
-    height: 70%;
-  }
-}
-
-.content_right {
-  height: 100%;
-  #sider_top {
-    height: 39%;
-  }
-
-  .dash_box{
-    height: 2%;
-  }
-
-  #sider_down {
-    height: 59%;
-  }
-}
-</style>

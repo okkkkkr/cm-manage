@@ -92,6 +92,7 @@ export default {
 .sub_title_box {
   display: flex;
   align-items: center;
+  
   .sub_title,
   .title_content {
     display: inline-block;

@@ -1,35 +1,29 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
 
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img src="../../assets/images/homePage/minner.jpg" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <img
+            src="../../assets/images/homePage/minner.jpg"
+            class="user-avatar"
+          />
+          <div class="account-info">
+            <div class="role">
+              社区方
+            </div>
+            <div class="name">龙珠花园</div>
+          </div>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <a target="_blank" href="https://akshare-4gize6tod19f2d2e-1252952517.tcloudbaseapp.com/index.html">
-            <el-dropdown-item>Akshare</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://tushare.pro/">
-            <el-dropdown-item>Tushare</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://www.eastmoney.com/">
-            <el-dropdown-item>东方财富</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://fund.eastmoney.com/">
-            <el-dropdown-item>天天基金</el-dropdown-item>
-          </a>
-          <a target="_blank" href="http://index.baidu.com/v2/index.html#/">
-            <el-dropdown-item>百度指数</el-dropdown-item>
-          </a>
+          <router-link to="/unit">
+            <el-dropdown-item>我的主页</el-dropdown-item>
+          </router-link>
           <router-link to="/">
-            <el-dropdown-item divided>
-              注销登录
-            </el-dropdown-item>
+            <el-dropdown-item divided> 注销登录 </el-dropdown-item>
           </router-link>
           <!-- <el-dropdown-item  @click.native="logout">
             <span style="display:block;">Log Out</span>
@@ -41,31 +35,33 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+import { mapGetters } from "vuex";
+import Breadcrumb from "@/components/Breadcrumb";
+import Hamburger from "@/components/Hamburger";
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar'
-    ])
+    ...mapGetters(["sidebar", "avatar"]),
+  },
+  data() {
+    return {
+      
+    };
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+      this.$store.dispatch("app/toggleSideBar");
     },
     // async logout() {
     //   await this.$store.dispatch('user/logout')
     //   this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     // }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -74,18 +70,18 @@ export default {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
     line-height: 46px;
     height: 100%;
     float: left;
     cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, 0.025);
     }
   }
 
@@ -112,10 +108,10 @@ export default {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }
@@ -126,6 +122,21 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
+
+        .account-info{
+          display: inline-block;
+          margin-left: 5px;
+
+          .role{
+            line-height: 25px;
+            font-size: 16px;
+            font-weight: bold;
+          }
+
+          .name{
+            line-height: 20px
+          }
+        }
 
         .user-avatar {
           cursor: pointer;

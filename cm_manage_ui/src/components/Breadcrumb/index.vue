@@ -31,11 +31,12 @@ export default {
       // only show routes with meta.title
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
       const first = matched[0]
+      
+      
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/databoard', meta: { title: '数据看板' }}].concat(matched)
+        matched = [{ path: '/unit', meta: { title: '个体信息' }}].concat(matched)
       }
-
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
     },
     isDashboard(route) {
@@ -43,7 +44,7 @@ export default {
       if (!name) {
         return false
       }
-      return name.trim().toLocaleLowerCase() === 'Databoard'.toLocaleLowerCase()
+      return name.trim().toLocaleLowerCase() === 'Unit'.toLocaleLowerCase()
     },
     pathCompile(path) {
       // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561

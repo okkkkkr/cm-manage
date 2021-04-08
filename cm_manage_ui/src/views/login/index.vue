@@ -9,7 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">财富秘码</h3>
+        <h3 class="title">活动综合管理与服务</h3>
       </div>
 
       <el-form-item prop="username">
@@ -52,14 +52,15 @@
       <el-button
         id="SUBMIT"
         :loading="loading"
-        type="primary"
+        type="success"
+        plain
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
+        >登 录</el-button
       >
 
       <div class="tips">
-        破解财富秘码,实现财富自由！
+        智慧社区不是喊口号，落地才是硬道理！
       </div>
     </el-form>
   </div>
@@ -123,7 +124,7 @@ export default {
       });
     },
     handleLogin() {
-      this.$router.push({ path: "databoard" });
+      this.$router.push({ path: "unit" });
       // this.$refs.loginForm.validate(valid => {
       //   if (valid) {
       //     this.loading = true
@@ -191,14 +192,14 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background: url('../../assets/images/login_bc.png') no-repeat;
+  background-size: 100%;
   overflow: hidden;
 
   .login-form {

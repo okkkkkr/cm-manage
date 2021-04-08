@@ -48,6 +48,10 @@ export default {
     basePath: {
       type: String,
       default: ''
+    },
+    belong: {
+      type: String,
+      default: ''
     }
   },
   data() {
