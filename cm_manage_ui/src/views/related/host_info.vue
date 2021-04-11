@@ -16,7 +16,7 @@
         <el-col :span="12">
           <div class="indicators">
             <ul>
-              <li style="font-size: 12px;">当前项目</li>
+              <li style="font-size: 12px">当前项目</li>
               <li class="choseItem">全部</li>
             </ul>
           </div>
@@ -26,36 +26,38 @@
 
     <div class="separator" style="height: 30px"></div>
 
-    <div class="host-member" v-for="item in hostList" :key="item.guid">
-      <el-card class="box-card" shadow="hover">
-        <div slot="header" class="clearfix">
-          <span>{{ item.ht_name }}</span>
-          <el-button style="float: right; padding: 3px 0" type="text"
-            >查看详情</el-button
-          >
-        </div>
-        <el-row>
-          <el-col :span="3">
-            <div class="host-detail">
-              <div class="text item">
-                <div class="demo-image">
-                  <div class="block">
-                    <el-image
-                      style="width: 100px; height: 100px"
-                      :src="item.ht_logo"
-                      fit="fill"
-                    ></el-image>
+    <div class="host-wrapper">
+      <div class="host-member" v-for="item in hostList" :key="item.guid">
+        <el-card class="box-card" shadow="hover">
+          <div slot="header" class="clearfix">
+            <span>{{ item.ht_name }}</span>
+            <el-button style="float: right; padding: 3px 0" type="text"
+              >查看详情</el-button
+            >
+          </div>
+          <el-row>
+            <el-col :span="3">
+              <div class="host-detail">
+                <div class="text item">
+                  <div class="demo-image">
+                    <div class="block">
+                      <el-image
+                        style="width: 100px; height: 100px"
+                        :src="item.ht_logo"
+                        fit="fill"
+                      ></el-image>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </el-col>
-          <el-col :span="21">
-            <div class="host-detail">个体介绍</div>
-          </el-col>
-        </el-row>
-      </el-card>
-      <div class="separator" style="height: 30px"></div>
+            </el-col>
+            <el-col :span="21">
+              <div class="host-detail">个体介绍</div>
+            </el-col>
+          </el-row>
+        </el-card>
+        <div class="separator" style="height: 30px"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -114,7 +116,7 @@ export default {
   &-container {
     background-color: #fdfdfd;
     min-height: 100vh;
-    padding: 30px;
+    padding: 30px 100px;
   }
 }
 
@@ -144,8 +146,20 @@ export default {
     font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-    color: #409eff
+    color: #409eff;
   }
+}
+
+.host-wrapper {
+  max-height: 70vh;
+  overflow-y: scroll;
+  padding: 15px;
+  background-color: #F7F7F7;
+  border-radius: 5px;
+}
+
+.host-wrapper::-webkit-scrollbar{
+  display: none;
 }
 </style>
 

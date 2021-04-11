@@ -13,7 +13,6 @@
           <div class="text item">
             <div class="demo-image">
               <div class="block">
-                <span class="demonstration">{{ fit }}</span>
                 <el-image
                   style="width: 100px; height: 100px"
                   :src="headURL"
@@ -35,12 +34,42 @@
         <span>关键指标</span>
       </div>
       <el-row>
-        <el-col v-for="item in indicatorsList" :key="item.title" :span="6">
+        <el-col :span="6">
           <div class="indicators">
             <ul>
-              <li style="font-size: 12px">{{ item.title }}</li>
+              <li style="font-size: 12px">活动场次（已举办）</li>
               <li style="font-size: 24px; font-weight: bold">
-                {{ item.value }}
+                213
+              </li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="indicators">
+            <ul>
+              <li style="font-size: 12px">活动项目</li>
+              <li style="font-size: 24px; font-weight: bold">
+                86
+              </li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="indicators">
+            <ul>
+              <li style="font-size: 12px">社区居民</li>
+              <li style="font-size: 24px; font-weight: bold">
+                686
+              </li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="indicators">
+            <ul>
+              <li style="font-size: 12px">新的消息</li>
+              <li style="font-size: 24px; font-weight: bold">
+                21
               </li>
             </ul>
           </div>
@@ -52,7 +81,7 @@
 
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix">
-        <span>活动场地介绍</span>
+        <span>活动场地</span>
       </div>
       <div class="block">
         <el-carousel :interval="3000" type="card">
@@ -150,12 +179,6 @@ export default {
     return {
       name: "首页",
       userList: {},
-      indicatorsList: [
-        { title: "活动场次（已举办）", value: "213" },
-        { title: "活动项目", value: "86" },
-        { title: "社区居民", value: "668" },
-        { title: "新的消息", value: "21" },
-      ],
       headURL:
         "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2572564972,1979933452&fm=26&gp=0.jpg",
       site: [
@@ -250,7 +273,7 @@ export default {
     },
   },
   mounted() {
-    this.test();
+    // this.test();
   },
 };
 </script>
@@ -260,7 +283,7 @@ export default {
   &-container {
     background-color: #fdfdfd;
     min-height: 100vh;
-    padding: 30px;
+    padding: 30px 100px;
   }
 }
 
@@ -283,6 +306,7 @@ export default {
   li {
     list-style: none;
     line-height: 30px;
+    text-align: center;
   }
 }
 
@@ -304,6 +328,6 @@ export default {
 }
 
 /deep/.el-carousel__container {
-  margin-left: 7%;
+  margin-left: 5%;
 }
 </style>

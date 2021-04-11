@@ -114,7 +114,7 @@ export default {
   &-container {
     background-color: #fdfdfd;
     min-height: 100vh;
-    padding: 30px;
+    padding: 30px 100px;
   }
 }
 
@@ -147,5 +147,7 @@ export default {
     color: #409eff
   }
 }
+
+
 </style>
 

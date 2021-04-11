@@ -21,46 +21,46 @@ export const adRoute = [
         children: [
           {
             path: 'host',
-            name: 'host',
-            component: () => import('@/views/related/host_info'),
-            meta: { title: '承办方信息', icon: 'el-icon-s-custom', belong: 'ad' }
+            name: 'Host',
+            component: () => import('@/views/admin/info_charge/unit_info'),
+            meta: { title: '承办方信息', icon: 'el-icon-user-solid', belong: 'ad' }
           },
           {
             path: 'community',
-            name: 'community',
-            component: () => import('@/views/related/activity_info'),
-            meta: { title: '社区方信息', icon: 'el-icon-s-custom', belong: 'ad' }
+            name: 'Community',
+            component: () => import('@/views/admin/info_charge/unit_info'),
+            meta: { title: '社区方信息', icon: 'el-icon-user-solid', belong: 'ad' }
           },
           {
-            path: 'community',
-            name: 'community',
-            component: () => import('@/views/related/activity_info'),
-            meta: { title: '管理员信息', icon: 'el-icon-s-custom', belong: 'ad' }
+            path: 'admin',
+            name: 'Admin',
+            component: () => import('@/views/admin/info_charge/unit_info'),
+            meta: { title: '管理员信息', icon: 'el-icon-user-solid', belong: 'ad' }
           }
         ]
       },
     
       {
-        path: '/ad-power',
+        path: '/ad-charge',
         component: Layout,
         meta: { title: '权限监管', icon: 'el-icon-info', belong: 'ad' },
         children: [
           {
             path: 'cm-power',
-            name: 'cm-power',
-            component: () => import('@/views/residents/index'),
+            name: 'Cm-power',
+            component: () => import('@/views/admin/power_charge/power_info'),
             meta: { title: '社区方权限', icon: 'el-icon-info', belong: 'ad' }
           },
           {
             path: 'ht-power',
-            name: 'ht-power',
-            component: () => import('@/views/residents/index'),
+            name: 'Ht-power',
+            component: () => import('@/views/admin/power_charge/power_info'),
             meta: { title: '承办方权限', icon: 'el-icon-info', belong: 'ad' }
           },
           {
             path: 'ad-power',
-            name: 'ad-power',
-            component: () => import('@/views/residents/index'),
+            name: 'Ad-power',
+            component: () => import('@/views/admin/power_charge/power_info'),
             meta: { title: '管理员权限', icon: 'el-icon-info', belong: 'ad' }
           },
         ]
@@ -73,13 +73,13 @@ export const adRoute = [
           {
             path: 'content',
             name: 'Content',
-            component: () => import('@/views/process/order'),
+            component: () => import('@/views/admin/activity_charge/activity_info'),
             meta: { title: '活动发布记录', icon: 'el-icon-s-operation', belong: 'ad' }
           },
           {
             path: 'order',
             name: 'Order',
-            component: () => import('@/views/process/order'),
+            component: () => import('@/views/admin/activity_charge/order_info'),
             meta: { title: '活动申办工单记录', icon: 'el-icon-s-operation', belong: 'ad' }
           }
           

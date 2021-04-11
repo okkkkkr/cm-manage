@@ -1,7 +1,6 @@
 import Layout from '@/layout'
-import adRoute from './ad_router';
-import cmRoute from './cm_route';
-import htRoute from './ht_route';
+import adRoute from './ad_route';
+import commonRoute from './common_route';
 
 export default [
   {
@@ -20,12 +19,11 @@ export default [
       meta: { title: '个体信息', icon: 'el-icon-user-solid', belong: "all" }
     }]
   },
-
-  // 引入角色专属的路由
-  ...cmRoute,
-  ...htRoute,
+  // 引入角色的路由
+  ...commonRoute,
   ...adRoute,
-
+  
+  
   {
     path: '/404',
     component: () => import('@/views/404'),

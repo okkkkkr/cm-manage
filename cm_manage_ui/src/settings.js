@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '财富秘码',
+  title: '活动综合管理与服务 ',
 
   /**
    * @type {boolean} true | false

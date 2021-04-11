@@ -15,7 +15,7 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div class="indicators-identity" style="border: 2px solid green;">
+            <div class="indicators-identity" :formatter="formatter" style="border: 2px solid green;">
               社会身份
             </div>
           </el-col>
@@ -75,13 +75,13 @@
           <el-table-column
             prop="cm_residents_identity"
             label="身份"
-            width="120"
+            width="80"
           >
           </el-table-column>
           <el-table-column
             prop="cm_residents_phone"
             label="联系方式"
-            width="120"
+            width="140"
           >
           </el-table-column>
           <el-table-column
@@ -93,7 +93,7 @@
           <el-table-column
             prop="cm_residents_address"
             label="居住地址"
-            width="300"
+            width="500"
           >
           </el-table-column>
         </el-table>
