@@ -1,5 +1,5 @@
 <template>
-  <div class="host-container">
+  <div class="community-container">
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix">
         <span>关键指标</span>
@@ -16,7 +16,7 @@
         <el-col :span="12">
           <div class="indicators">
             <ul>
-              <li style="font-size: 12px;">当前项目</li>
+              <li style="font-size: 12px">当前项目</li>
               <li class="choseItem">全部</li>
             </ul>
           </div>
@@ -110,44 +110,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.host {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px 100px;
-  }
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.indicators {
-  ul {
-    padding: 0;
-    margin: 0;
-    height: 60px;
-  }
-
-  li {
-    list-style: none;
-    line-height: 30px;
-    text-align: center;
-  }
-
-  .choseItem {
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #409eff
-  }
-}
-
-
+@import "../../styles/related/community_info.less";
 </style>
 

@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       filterMenu: [],
-      Auth: 'ad',
+      Auth: 'cm',
     };
   },
   components: { SidebarItem, Logo },

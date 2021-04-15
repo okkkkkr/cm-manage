@@ -9,6 +9,7 @@ import related from './modules/related/related'
 import residents from './modules/residents/residents'
 import process from './modules/process/process'
 import databoard from './modules/databoard/databoard'
+import global from './modules/global/global'
 
 
 Vue.use(Vuex)
@@ -18,6 +19,8 @@ const store = new Vuex.Store({
     app,
     settings,
     user,
+
+    global,
     unit,
     related,
     residents,

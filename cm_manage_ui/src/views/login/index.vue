@@ -1,5 +1,12 @@
 <template>
   <div class="login-container">
+    <video
+      src="../../assets/bg.mp4"
+      loop
+      muted
+      autoplay
+      id="bg-video"
+    ></video>
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -53,15 +60,12 @@
         id="SUBMIT"
         :loading="loading"
         type="success"
-        plain
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
         >登 录</el-button
       >
 
-      <div class="tips">
-        智慧社区不是喊口号，落地才是硬道理！
-      </div>
+      <div class="tips">智慧社区不是喊口号，落地才是硬道理！</div>
     </el-form>
   </div>
 </template>
@@ -145,9 +149,6 @@ export default {
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
 $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
@@ -195,11 +196,24 @@ $cursor: #fff;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    background: url('../../assets/images/login_bc.png') no-repeat;
+    background-size: cover;
+  }
+
 .login-container {
   min-height: 100%;
   width: 100%;
-  background: url('../../assets/images/login_bc.png') no-repeat;
-  background-size: 100%;
+  // background: url("../../assets/images/login_bc.png") no-repeat;
+  // background-size: 100%;
   overflow: hidden;
 
   .login-form {

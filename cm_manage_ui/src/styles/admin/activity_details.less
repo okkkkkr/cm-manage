@@ -1,0 +1,136 @@
+.details {
+    &-container {
+      background-color: #fdfdfd;
+      min-height: 100vh;
+      padding: 30px 100px;
+    }
+  }
+  
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both;
+  }
+  
+  .indicators {
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+  
+    li {
+      list-style: none;
+      text-align: center;
+    }
+  
+    .unit-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 15px;
+      color: #303133;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  
+    .choseItem {
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #409eff;
+    }
+  }
+  
+  .Icon {
+    margin-top: 50%;
+    text-align: center;
+  }
+  
+  .ac-content {
+    font-weight: bold;
+    color: #303133;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .signUp {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .another-icon{
+      color: #fc5531;
+      margin-left: 5px;
+  }
+  
+  .img-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    img {
+      animation: waveHands 2s ease infinite alternate-reverse;
+    }
+  }
+  .dot {
+    position: absolute;
+    left: 38%;
+    top: 15%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .wave {
+    position: absolute;
+    left: 38%;
+    top: 15%;
+    width: 24px;
+    height: 24px;
+    border-left: 0.2px solid #409eff;
+    border-right: 0.2px solid #409eff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: waveCircle 4s ease infinite;
+  }
+  
+  @keyframes waveCircle {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(2.5);
+      opacity: 0.4;
+    }
+    100% {
+      transform: scale(6);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes waveHands {
+    0% {
+      transform: translateY(0px);
+    }
+    10% {
+      transform: translateY(-5px);
+    }
+    20% {
+      transform: translateY(0px);
+    }
+    100% {
+      transition: translateY(0px);
+    }
+  }
+  
+  /deep/.another-cont .el-card__body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  /deep/.el-collapse {
+    border: none;
+  }

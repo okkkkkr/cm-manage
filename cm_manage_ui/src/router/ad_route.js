@@ -9,8 +9,15 @@ export const adRoute = [
         {
           path: 'index',
           name: 'Audit',
-          component: () => import('@/views/databoard/index'),
+          component: () => import('@/views/admin/activity_audit/activity_audit'),
           meta: { title: '活动审核', icon: 'el-icon-s-platform', belong: 'ad' }
+        },
+        {
+          path: 'details',
+          name: 'Details',
+          // hidden: true,
+          component: () => import('@/views/admin/activity_audit/activity_details'),
+          meta: { title: '活动详情', icon: 'el-icon-s-platform', belong: 'ad' }
         }
       ]
     },
@@ -84,7 +91,7 @@ export const adRoute = [
           }
           
         ]
-      }
+      },
 ]
 
 export default adRoute

@@ -19,10 +19,23 @@ export default [
       meta: { title: '个体信息', icon: 'el-icon-user-solid', belong: "all" }
     }]
   },
+  {
+    path: '/personal',
+    component: Layout,
+    children: [
+      {
+        path: 'set',
+        name: 'Set',
+        hidden: true,
+        component: () => import('@/views/unit/unit_details'),
+        meta: { title: '个人信息修改', icon: 'el-icon-user-solid', belong: 'all' }
+      }
+      
+    ]
+  },
   // 引入角色的路由
   ...commonRoute,
   ...adRoute,
-  
   
   {
     path: '/404',

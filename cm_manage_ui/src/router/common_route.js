@@ -20,6 +20,12 @@ export const commonRoute = [
         meta: { title: '社区方信息', icon: 'el-icon-user-solid', belong: 'ht' }
       },
       {
+        path: 'manager',
+        name: 'Manager',
+        component: () => import('@/views/manager/manager_charge'),
+        meta: { title: '管理者信息', icon: 'el-icon-user-solid', belong: 'all' }
+      },
+      {
         path:'inform',
         name:'Inform',
         component: () => import('@/views/related/my_inform'),
@@ -28,7 +34,7 @@ export const commonRoute = [
       {
         path: 'activityInfo',
         name: 'ActivityInfo',
-        // hidden: true,
+        hidden: true,
         component: () => import('@/views/related/activity_info'),
         meta: { title: '活动详情', icon: 'el-icon-s-ticket', belong: "all"}
       },
@@ -42,7 +48,7 @@ export const commonRoute = [
       {
         path: 'cmDetails',
         name: 'CmDetails',
-        // hidden: true,
+        hidden: true,
         component: () => import('@/views/related/host_details'),
         meta: { title: '社区方详情', icon: 'el-icon-s-ticket', belong: "ht"}
       },

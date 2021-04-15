@@ -547,27 +547,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.host {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px;
-  }
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.indicators{
-   
-}
-
-
+  @import '../../styles/personnel/index.less';
 </style>
 

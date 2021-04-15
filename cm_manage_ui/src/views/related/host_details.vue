@@ -3,7 +3,7 @@
   <div class="details-container">
     <el-card class="box-card">
       <el-row class="indicators">
-        <el-col :span="3">
+        <el-col :span="2">
           <el-avatar
             shape="square"
             :size="100"
@@ -151,6 +151,7 @@ export default {
   data() {
     return {
       orderState: "全部",
+      introduce:"",
        site: [
         {
           location: "场地1",
@@ -188,99 +189,5 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-.details {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px 100px;
-  }
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.indicators {
-  .unit-name {
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 15px;
-    color: #303133;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  .unit-basic {
-    font-size: 14px;
-  }
-
-  .choseItem {
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #409eff;
-  }
-}
-
-.Icon {
-  margin-top: 50%;
-  text-align: center;
-}
-
-.ac-content {
-  font-weight: bold;
-  color: #303133;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.teamwork {
-  height: 30px;
-  display: flex;
-  align-items: center;
-  margin: 50px 0 30px;
-
-  .teamwork-item {
-    font-size: 16px;
-    display: inline-block;
-    margin-left: 20px;
-  }
-
-  .teamwork-info {
-    font-size: 16px;
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-  }
-}
-
-.another-cont {
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #f7f7f7;
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
-.another-cont::-webkit-scrollbar {
-  display: none;
-}
-
-.another-icon {
-  color: #fc5531;
-  margin-left: 5px;
-}
-
-/deep/.another-cont .el-card__body {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-/deep/.el-collapse {
-  border: none;
-}
+  @import '../../styles/related/host_details.less';
 </style>

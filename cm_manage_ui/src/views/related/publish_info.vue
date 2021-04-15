@@ -156,67 +156,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.activity {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px 100px;
-  }
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.indicators {
-  ul {
-    padding: 0;
-    margin: 0;
-    height: 60px;
-  }
-
-  li {
-    list-style: none;
-    line-height: 30px;
-    text-align: center;
-  }
-
-  .choseItem {
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #409eff;
-  }
-}
-
-.host-wrapper {
-  max-height: 70vh;
-  overflow-y: scroll;
-  padding: 15px;
-  background-color: #F7F7F7;
-  border-radius: 5px;
-}
-
-.host-wrapper::-webkit-scrollbar{
-  display: none;
-}
-
-.order-info {
-  font-size: 20px;
-  font-weight: bold;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10px;
-  width: 100%;
-  .host-name {
-    margin-left: 20px;
-    color: #409eff;
-    cursor: pointer;
-  }
-}
+  @import '../../styles/related/publish_info.less';
 </style>
 

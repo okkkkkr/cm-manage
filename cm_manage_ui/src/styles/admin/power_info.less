@@ -1,0 +1,52 @@
+.power {
+    &-container {
+      background-color: #fdfdfd;
+      min-height: 100vh;
+      padding: 30px 100px;
+    }
+  }
+  
+  .power-title {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-list {
+    margin-top: 20px;
+  }
+  
+  .another-cont {
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    max-height: 400px;
+    overflow-y: scroll;
+    .another-icon {
+      color: #409eff;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    }
+  
+    .unit-info {
+      margin-left: 5px;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    }
+  
+    .power-item {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  .another-cont::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /deep/.another-cont .el-card__body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }

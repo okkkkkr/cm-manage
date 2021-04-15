@@ -1,5 +1,5 @@
 <template>
-  <div class="host-container">
+  <div class="unit-container">
     <el-card class="box-card">
       <p>
         <i
@@ -71,6 +71,7 @@
 export default {
   data() {
     return {
+      input2:'',
       currentPage: 1,
       tableData: [],
     };
@@ -95,22 +96,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.host {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px 100px;
-  }
-}
-
-.host-title {
-  margin-left: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-}
-
-.host-list {
-  margin-top: 20px;
-}
+  @import '../../../styles/admin/unit_info.less';
 </style>

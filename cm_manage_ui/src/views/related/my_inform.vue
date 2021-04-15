@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-container">
+  <div class="inform-container">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>关键指标</span>
@@ -150,69 +150,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.activity {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px 100px;
-  }
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.indicators {
-  ul {
-    padding: 0;
-    margin: 0;
-    height: 60px;
-  }
-
-  li {
-    list-style: none;
-    line-height: 30px;
-    text-align: center;
-  }
-
-  .choseItem {
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #409eff;
-  }
-}
-
-.inform-box {
-  width: 100%;
-  flex-wrap: wrap;
-  background-color: #f7f7f7;
-  padding-bottom: 20px;
-  border-radius: 5px;
-  display: flex;
-  .inform-item {
-    width: 16%;
-    margin: 20px 2% 0;
-  }
-
-  .inform-content{
-      font-size: 14px;
-  }
-
-  .inform-separator {
-    display: inline-block;
-    width: 2%;
-  }
-}
-
-.switch-state {
-  float: right;
-  cursor: pointer;
-}
+  @import '../../styles/related/my_inform.less';
 </style>
 

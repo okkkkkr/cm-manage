@@ -64,8 +64,11 @@
                   审核完成时间：<span class="another-details">2018/4/2 20:46</span>
                 </p>
               </el-col>
-              <el-col :span="8"><div class="grid-content bg-purple"></div></el-col>
-              <el-col :span="8"><div class="grid-content bg-purple-light"></div></el-col>
+              <el-col :span="16" style="text-align: right;">
+              <p class="view-details">
+                查看详情<i class="el-icon-arrow-right"></i>
+              </p>
+              </el-col>
             </el-row>
           </el-collapse-item>
         </el-collapse>
@@ -102,59 +105,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.activity {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px 100px;
-  }
-}
-
-.activity-title {
-  margin-left: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-}
-
-.another-cont {
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #f7f7f7;
-  max-height: 400px;
-  overflow-y: scroll;
-  .another-icon {
-    color: #409eff;
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
-  }
-
-  .unit-info{
-    margin-left: 5px;
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
-  }
-
-  .combine{
-    margin: 0 20px;
-    color: #f06f58;
-    font-size: 14px;
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
-  }
-
-  .another-details{
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
-  }
-}
-
-.another-cont::-webkit-scrollbar {
-  display: none;
-}
-
-/deep/.another-cont .el-card__body {
-  padding-top: 0;
-  padding-bottom: 0;
-}
+  @import '../../../styles/admin/activity_info.less';
 </style>

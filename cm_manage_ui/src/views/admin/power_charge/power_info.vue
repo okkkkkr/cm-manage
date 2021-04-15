@@ -2,10 +2,7 @@
   <div class="power-container">
     <el-card class="box-card">
       <p>
-        <i
-          class="el-icon-info"
-          style="font-size: 20px; color: #409eff"
-        ></i>
+        <i class="el-icon-info" style="font-size: 20px; color: #409eff"></i>
         <span class="power-title">承办方权限</span>
       </p>
       <el-row :gutter="50">
@@ -13,7 +10,7 @@
           <el-input
             placeholder="个体名称检索"
             prefix-icon="el-icon-search"
-            v-model="input2"
+            v-model="unitName"
           >
           </el-input>
         </el-col>
@@ -21,7 +18,7 @@
           <el-input
             placeholder="所在地址检索"
             prefix-icon="el-icon-search"
-            v-model="input2"
+            v-model="unitLocation"
           >
           </el-input>
         </el-col>
@@ -38,15 +35,51 @@
             <template slot="title">
               <i class="el-icon-s-home another-icon"></i
               ><span class="unit-info">北京理工大学珠海学院</span>
-              <i style="margin-left: 50px;" class="el-icon-location another-icon"></i
+              <i
+                style="margin-left: 50px"
+                class="el-icon-location another-icon"
+              ></i
               ><span class="unit-info">广东省珠海市香洲区金凤路10号</span>
             </template>
-            <div>
-              与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；
-            </div>
-            <div>
-              在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
-            </div>
+            <el-row>
+              <div class="power-item">
+                <span>所有权限：</span>
+                <el-tooltip
+                  :content="allPower == 1 ? '关闭权限' : '开放权限'"
+                  placement="top"
+                >
+                  <el-switch
+                    v-model="allPower"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    active-value="1"
+                    inactive-value="0"
+                  >
+                  </el-switch>
+                </el-tooltip>
+              </div>
+              <el-col
+                :span="4"
+                class="power-item"
+                v-for="item in powerList"
+                :key="item.title"
+              >
+                <span>{{ item.title }}：</span>
+                <el-tooltip
+                  :content="item.value == 1 ? '关闭权限' : '开放权限'"
+                  placement="top"
+                >
+                  <el-switch
+                    v-model="item.value"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    active-value="1"
+                    inactive-value="0"
+                  >
+                  </el-switch>
+                </el-tooltip>
+              </el-col>
+            </el-row>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -58,9 +91,76 @@
 export default {
   data() {
     return {
+      unitName: "",
+      unitLocation: "",
       currentPage: 1,
       tableData: [],
+      allPower: "1",
+      powerString: "",
+      powerList: [
+        {
+          title: "活动发布",
+          value: "1",
+        },
+        {
+          title: "活动申办",
+          value: "1",
+        },
+        {
+          title: "活动流程编辑",
+          value: "1",
+        },
+        {
+          title: "活动数据监控",
+          value: "1",
+        },
+        {
+          title: "个体信息监管",
+          value: "1",
+        },
+      ],
     };
+  },
+  watch: {
+    allPower: function (val) {
+      if (val == "0") {
+        for (let item of this.powerList) {
+          item.value = val;
+        }
+      }
+      if (this.ownership == "00000") {
+        for (let item of this.powerList) {
+          item.value = val;
+        }
+      }
+    },
+
+    powerList: {
+      deep: true,
+      immediate: false,
+      handler() {
+        this.powerString = '';
+        for (let item of this.powerList) {
+          this.powerString += item.value;
+        }
+      }
+      
+    },
+
+    ownership: function (val) {
+      if (val == "00000") {
+        this.allPower = "0";
+      } else {
+        this.allPower = "1";
+      }
+    },
+  },
+  computed: {
+    ownership: {
+      get: function () {
+        return this.powerString;
+      },
+    },
   },
   methods: {
     formatter(row, column) {
@@ -82,50 +182,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.power {
-  &-container {
-    background-color: #fdfdfd;
-    min-height: 100vh;
-    padding: 30px 100px;
-  }
-}
-
-.power-title {
-  margin-left: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-}
-
-.user-list {
-  margin-top: 20px;
-}
-
-.another-cont {
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #f7f7f7;
-  max-height: 400px;
-  overflow-y: scroll;
-  .another-icon {
-    color: #409eff;
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
-  }
-
-  .unit-info{
-    margin-left: 5px;
-    font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
-  }
-}
-
-.another-cont::-webkit-scrollbar {
-  display: none;
-}
-
-/deep/.another-cont .el-card__body {
-  padding-top: 0;
-  padding-bottom: 0;
-}
+  @import '../../../styles/admin/power_info.less';
 </style>

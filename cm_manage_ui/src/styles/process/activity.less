@@ -1,0 +1,72 @@
+.activity {
+    &-container {
+      background-color: #fdfdfd;
+      min-height: 100vh;
+      padding: 30px 100px;
+    }
+  }
+  
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both;
+  }
+  
+  .indicators {
+    ul {
+      padding: 0;
+      margin: 0;
+      height: 60px;
+    }
+  
+    li {
+      list-style: none;
+      line-height: 30px;
+      text-align: center;
+    }
+  
+    .choseItem {
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #409eff;
+    }
+  }
+  
+  .activity-info {
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 10px;
+    width: 100%;
+    .activity-nums {
+      margin-left: 20px;
+      color: #409eff;
+    }
+  
+    .activity-item {
+      float: right;
+      .item-name {
+        color: #409eff;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+  
+  .ongoing,
+  .finished {
+    max-height: 75vh;
+    overflow-y: scroll;
+    background-color: #F7F7F7;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .ongoing::-webkit-scrollbar,
+  .finished::-webkit-scrollbar {
+    display: none;
+  }

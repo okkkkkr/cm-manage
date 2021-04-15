@@ -163,16 +163,79 @@
         </el-table>
       </div>
     </el-card>
+
+    <div class="separator" style="height: 30px"></div>
+
+    <el-card class="box-card" shadow="hover">
+      <div slot="header" class="clearfix">
+          <span>物资信息</span>
+      </div>
+      <div class="block">
+        <el-table :data="tableData" style="width: 100%" height="500">
+          <el-table-column type="expand">
+            <template slot-scope="props">
+              <el-form label-position="left" class="demo-table-expand">
+                <el-form-item label="管理员信息"></el-form-item>
+                <el-form-item
+                  v-for="item in props.row.activityList"
+                  :key="item.guid"
+                >
+                  <el-row>
+                    <el-col :span="6">
+                      <span>{{ item.ac_name }}</span>
+                    </el-col>
+                    <el-col :span="6">
+                      <span>{{ item.ac_address }}</span>
+                    </el-col>
+                    <el-col :span="6">
+                      <span>{{ item.ac_begin_time }}</span>
+                    </el-col>
+                    <el-col :span="6"></el-col>
+                  </el-row>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
+          <el-table-column type="index" label="序号" width="80">
+          </el-table-column>
+          <el-table-column prop="cm_residents_name" label="姓名" width="120">
+          </el-table-column>
+          <el-table-column prop="cm_residents_age" label="年龄" width="120">
+          </el-table-column>
+          <el-table-column prop="cm_residents_sex" label="性别" width="120">
+          </el-table-column>
+          <el-table-column prop="cm_residents_place" label="籍贯" width="120">
+          </el-table-column>
+          <el-table-column
+            prop="cm_residents_identity"
+            label="职位"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="cm_residents_phone"
+            label="联系方式"
+            width="120"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="cm_residents_paticipate"
+            label="身份证号"
+            width="200"
+          >
+          </el-table-column>
+          
+        </el-table>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script>
 // import { mapGetters } from 'vuex'
 import { mapActions, mapMutations } from "vuex";
-import subTitleBox from "../../components/plug/sub-title-box.vue";
 
 export default {
-  components: { subTitleBox },
   name: "Unit",
   computed: {},
   data() {

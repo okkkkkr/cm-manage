@@ -5,8 +5,8 @@ import { getToken, setToken, removeToken } from '@/utils/auth'
 const getDefaultState = () => {
   return {
     token: getToken(),
-    name: '',
-    avatar: ''
+    userInfo: '',
+    unitInfo: ''
   }
 }
 
@@ -19,11 +19,11 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_NAME: (state, userInfo) => {
+    state.userInfo = userInfo
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  SET_AVATAR: (state, unitInfo) => {
+    state.unitInfo = unitInfo
   }
 }
 
@@ -53,10 +53,10 @@ const actions = {
           return reject('Verification failed, please Login again.')
         }
 
-        const { name, avatar } = data
+        const { userInfo, unitInfo } = data
 
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
+        commit('SET_NAME', userInfo)
+        commit('SET_AVATAR', unitInfo)
         resolve(data)
       }).catch(error => {
         reject(error)

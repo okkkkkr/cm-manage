@@ -1,0 +1,63 @@
+.activity {
+    &-container {
+      background-color: #fdfdfd;
+      min-height: 100vh;
+      padding: 30px 100px;
+    }
+  }
+  
+  .activity-title {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .another-cont {
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    max-height: 400px;
+    overflow-y: scroll;
+    .another-icon {
+      color: #409eff;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    }
+  
+    .unit-info{
+      margin-left: 5px;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    }
+  
+    .combine{
+      margin: 0 20px;
+      color: #f06f58;
+      font-size: 14px;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    }
+  
+    .another-details{
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    }
+    .view-details{
+      color: #409EFF;
+      cursor: pointer;
+      &:hover{
+        font-weight: bold;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+      }
+    }
+  }
+  
+  .another-cont::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /deep/.another-cont .el-card__body {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
