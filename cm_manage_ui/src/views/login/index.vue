@@ -1,12 +1,6 @@
 <template>
   <div class="login-container">
-    <video
-      src="../../assets/bg.mp4"
-      loop
-      muted
-      autoplay
-      id="bg-video"
-    ></video>
+    <video src="../../assets/bg.mp4" loop muted autoplay id="bg-video"></video>
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -19,15 +13,15 @@
         <h3 class="title">活动综合管理与服务</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          ref="account"
+          v-model="loginForm.account"
+          placeholder="账号"
+          name="account"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -43,7 +37,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -71,37 +65,21 @@
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
+import { mapActions, mapGetters } from "vuex";
+import { notice } from "@/utils/message";
+import { getLocal } from "@/utils/handleCache";
 
 export default {
   name: "Login",
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
-      } else {
-        callback();
-      }
-    };
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
-      } else {
-        callback();
-      }
-    };
     return {
       loginForm: {
-        username: "admin",
-        password: "111111",
+        account: "",
+        password: "",
       },
       loginRules: {
-        username: [
-          { required: true, trigger: "blur", validator: validateUsername },
-        ],
-        password: [
-          { required: true, trigger: "blur", validator: validatePassword },
-        ],
+        account: [{ required: true, trigger: "blur" }],
+        password: [{ required: true, trigger: "blur" }],
       },
       loading: false,
       passwordType: "password",
@@ -116,7 +94,10 @@ export default {
       immediate: true,
     },
   },
+  computed: {},
   methods: {
+    ...mapActions("global", ["LOGIN", "GET_INFO"]),
+
     showPwd() {
       if (this.passwordType === "password") {
         this.passwordType = "";
@@ -127,22 +108,35 @@ export default {
         this.$refs.password.focus();
       });
     },
+
+    // 登录
     handleLogin() {
-      this.$router.push({ path: "unit" });
-      // this.$refs.loginForm.validate(valid => {
-      //   if (valid) {
-      //     this.loading = true
-      //     this.$store.dispatch('user/login', this.loginForm).then(() => {
-      //       this.$router.push({ path: this.redirect || '/' })
-      //       this.loading = false
-      //     }).catch(() => {
-      //       this.loading = false
-      //     })
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
+      var role = JSON.parse(getLocal("role"));
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.LOGIN(this.loginForm).then((response) => {
+            if (response == 'TokenPass') {
+              if (role != "ad") {
+                this.$router.push({ path: "/unit" });
+              } else {
+                this.$router.push({ path: "/ad-audit/index" });
+              }
+            } else {
+              this.GET_INFO(response).then((res) => {
+                notice("success", "登录成功");
+                if (role != "ad") {
+                  this.$router.push({ path: "/unit" });
+                } else {
+                  this.$router.push({ path: "/ad-audit/index" });
+                }
+              });
+            }
+          });
+        } else {
+          notice("warning", "请填写用户名及密码");
+          return false;
+        }
+      });
     },
   },
 };
@@ -197,17 +191,17 @@ $dark_gray: #889aa4;
 $light_gray: #eee;
 
 #bg-video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    background: url('../../assets/images/login_bc.png') no-repeat;
-    background-size: cover;
-  }
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  background: url("../../assets/images/login_bc.png") no-repeat;
+  background-size: cover;
+}
 
 .login-container {
   min-height: 100%;

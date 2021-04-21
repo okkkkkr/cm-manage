@@ -16,7 +16,6 @@
   "dependencies": {
     "@antv/g2plot": "^2.3.17",
     "axios": "0.18.1",
-    "core-js": "3.6.5",
     "element-ui": "2.13.2",
     "eslint": "^7.19.0",
     "jquery": "^3.5.1",

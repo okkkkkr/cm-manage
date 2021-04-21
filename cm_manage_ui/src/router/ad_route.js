@@ -5,6 +5,7 @@ export const adRoute = [
     {
       path: '/ad-audit',
       component: Layout,
+      meta: { belong: 'ad' },
       children: [
         {
           path: 'index',
@@ -15,7 +16,7 @@ export const adRoute = [
         {
           path: 'details',
           name: 'Details',
-          // hidden: true,
+          hidden: true,
           component: () => import('@/views/admin/activity_audit/activity_details'),
           meta: { title: '活动详情', icon: 'el-icon-s-platform', belong: 'ad' }
         }
@@ -30,18 +31,18 @@ export const adRoute = [
             path: 'host',
             name: 'Host',
             component: () => import('@/views/admin/info_charge/unit_info'),
-            meta: { title: '承办方信息', icon: 'el-icon-user-solid', belong: 'ad' }
+            meta: { title: '承办方信息', icon: 'el-icon-user-solid', belong: 'ad'}
           },
           {
             path: 'community',
             name: 'Community',
             component: () => import('@/views/admin/info_charge/unit_info'),
-            meta: { title: '社区方信息', icon: 'el-icon-user-solid', belong: 'ad' }
+            meta: { title: '社区方信息', icon: 'el-icon-user-solid', belong: 'ad'}
           },
           {
             path: 'admin',
             name: 'Admin',
-            component: () => import('@/views/admin/info_charge/unit_info'),
+            component: () => import('@/views/admin/info_charge/admin_info'),
             meta: { title: '管理员信息', icon: 'el-icon-user-solid', belong: 'ad' }
           }
         ]

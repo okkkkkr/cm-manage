@@ -8,54 +8,43 @@ import Cookies from 'js-cookie'
 
  // sessionStorage
 export const setSession = (name, value) => {
-    if (process.client) {
-      window.sessionStorage.setItem(name, value)
-    }
+    window.sessionStorage.setItem(name, value)
 }
 
 export const getSession = (name) => {
-    if (process.client) {
-        let value = window.sessionStorage.getItem(name)
-        return JSON.stringify(value)
-    }
+    let value = window.sessionStorage.getItem(name)
+    return JSON.stringify(value)
 }
 
 export const removeSession = (name) => {
-    if (process.client) {
         window.sessionStorage.removeItem(name)
-    }
+    
 }
 
 export const clearSession = () => {
-    if (process.client) {
-        window.sessionStorage.clear()
-    }
+    window.sessionStorage.clear()
 }
 
 // localStorage
 export const setLocal = (name, value) => {
-    if (process.client) {
-      window.localStorage.setItem(name, value)
-    }
+    window.localStorage.setItem(name, value)
+
 }
 
 export const getLocal = (name) => {
-    if (process.client) {
-        let value = window.localStorage.getItem(name)
-        return JSON.stringify(value)
-    }
+    let value = window.localStorage.getItem(name)
+    return JSON.stringify(value)
+
 }
 
 export const removeLocal = (name) => {
-    if (process.client) {
-        window.localStorage.removeItem(name)
-    }
+    window.localStorage.removeItem(name)
+
 }
 
 export const clearLocal = () => {
-    if (process.client) {
-        window.localStorage.clear()
-    }
+    window.localStorage.clear()
+
 }
 
 // cookies
@@ -76,3 +65,4 @@ export const clearCookie = () => {
           document.cookie=keys[i]+"=0; expire="+date.toGMTString()+"; path=/";
     }
 }
+

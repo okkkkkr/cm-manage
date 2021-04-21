@@ -1,10 +1,5 @@
 export const mutations = {
-    // 设定角色
-    SET_ROLE: (state ,Role) => {
-        state.role = Role
-    },
-
-    // 设定社区方权限
+   // 设定社区方权限
     SET_CM_LIMIT: (state ,powerList) => {
         let limit = powerList.split('')
         state.cm_limit = limit;

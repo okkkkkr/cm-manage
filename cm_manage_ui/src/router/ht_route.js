@@ -1,17 +1,17 @@
-//社区方路由列表
+// 承办方路由
 import Layout from '@/layout'
 
-export const cmRoute = [
+export const ht_route = [
   {
-    path: '/cm-related',
+    path: '/ht-related',
     component: Layout,
-    meta: { title: '相关信息', icon: 'el-icon-share', belong: 'cm' },
+    meta: { title: '相关信息', icon: 'el-icon-share', belong: 'ht' },
     children: [
       {
-        path: 'host',
-        name: 'host',
+        path: 'community',
+        name: 'Community',
         component: () => import('@/views/related/host_info'),
-        meta: { title: '承办方信息', icon: 'el-icon-s-custom'}
+        meta: { title: '社区方信息', icon: 'el-icon-user-solid'}
       },
       {
         path: 'manager',
@@ -28,43 +28,37 @@ export const cmRoute = [
       {
         path: 'activityInfo',
         name: 'ActivityInfo',
-        // hidden: true,
+        hidden: true,
         component: () => import('@/views/related/activity_info'),
         meta: { title: '活动详情', icon: 'el-icon-s-ticket'}
       },
       {
-        path: 'hostDetails',
-        name: 'HostDetails',
-        // hidden: true,
+        path: 'cmDetails',
+        name: 'CmDetails',
+        hidden: true,
         component: () => import('@/views/related/host_details'),
-        meta: { title: '承办方详情', icon: 'el-icon-s-ticket'}
-      },
-      {
-        path: 'publish',
-        name: 'publish',
-        component: () => import('@/views/related/publish_info'),
-        meta: { title: '活动发布', icon: 'el-icon-s-ticket'}
+        meta: { title: '社区方详情', icon: 'el-icon-s-ticket'}
       }
     ]
   },
 
   {
-    path: '/cm-residents',
+    path: '/personnel',
     component: Layout,
-    meta: { belong: 'cm' },
+    meta: { belong: 'ht' },
     children: [
       {
-        path: 'index',
-        name: 'residents',
+        path: 'employees',
+        name: 'Employees',
         component: () => import('@/views/personnel/index'),
-        meta: { title: '居民信息', icon: 'el-icon-info'}
+        meta: { title: '职员信息', icon: 'el-icon-info'}
       },
     ]
   },
   {
-    path: '/cm-process',
+    path: '/process',
     component: Layout,
-    meta: { title: '流程监管', icon: 'el-icon-s-operation', belong: 'cm' },
+    meta: { title: '流程监管', icon: 'el-icon-s-operation', belong: 'ht' },
     children: [
       {
         path: 'activity',
@@ -76,7 +70,7 @@ export const cmRoute = [
         path: 'details',
         name: 'Details',
         component: () => import('@/views/process/process_details'),
-        meta: { title: '活动流程详情', icon: 'el-icon-s-order' }
+        meta: { title: '活动流程详情', icon: 'el-icon-s-order'}
       },
       {
         path: 'order',
@@ -88,18 +82,18 @@ export const cmRoute = [
   },
 
   {
-    path: '/cm-data',
+    path: '/data',
     component: Layout,
-    meta: { belong: 'cm' },
+    meta: { belong: 'ht' },
     children: [
       {
         path: 'index',
         name: 'Databoard',
         component: () => import('@/views/databoard/index'),
-        meta: { title: '数据监管', icon: 'el-icon-s-platform', belong: 'cm' }
+        meta: { title: '数据监管', icon: 'el-icon-s-platform' }
       }
     ]
   },
 ]
 
-export default cmRoute
+export default ht_route

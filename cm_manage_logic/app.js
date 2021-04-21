@@ -2,23 +2,35 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var logger = require('morgan');
+var cors = require('cors');
+var mysql = require('mysql');
+var $dbConfig = require('./db')
+
+//mysql连接池
+var db = mysql.createPool($dbConfig);
 
 // 引入二级路由
 var indexRouter = require('./routes/index');
-var users = require('./routes/users');
+var users = require('./routes/users/users');
+var login = require('./routes/login-out/login')
+var upload = require('./routes/upload/upload')
 
 var app = express();
 
 // view engine setup(jade模板引擎)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+//解决cors跨越问题
+app.use(cors());
 app.use(logger('dev'));
 
 //传入数据的格式转换
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 //访问静态资源
@@ -26,7 +38,9 @@ app.use('/static',express.static(path.join(__dirname, 'public')));
 
 //模块路由使用
 app.use('/', indexRouter);
-app.use('/users', users);
+app.use('/api/users', users);
+app.use('/api/sign', login);
+app.use('/api/upload', upload)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

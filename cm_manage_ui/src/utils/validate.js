@@ -1,7 +1,4 @@
-/**
- * Created by PanJiaChen on 16/11/18.
- */
-
+const areadata = require('../assets/area-data')
 /**
  * @param {string} path
  * @returns {Boolean}

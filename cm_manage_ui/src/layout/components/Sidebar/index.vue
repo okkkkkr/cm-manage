@@ -28,11 +28,11 @@ import { mapGetters } from "vuex";
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
 import variables from "@/styles/variables.scss";
+import { getLocal } from "@/utils/handleCache";
 export default {
   data() {
     return {
       filterMenu: [],
-      Auth: 'cm',
     };
   },
   components: { SidebarItem, Logo },
@@ -59,41 +59,27 @@ export default {
   },
 
   methods: {
-    routes(auth) {
+    routes() {
       let routeList = this.$router.options.routes;
-      console.log("routerList", routeList);
-      // 根据用户过滤路由
+      var role = JSON.parse(getLocal("role"));
 
-      if (auth == "ad") {
-        routeList.map((item, index) => {
-          if (item.children) {
-            if (item.children[0].meta.belong == 'ad') {
-              this.filterMenu.push(item)
-            }
+      // 根据用户过滤路由
+      routeList.map((item, index) => {
+        if (role == "ad") {
+          if (item.meta.belong == 'ad') {
+            this.filterMenu.push(item);
           }
-        });
-      } else {
-        routeList.map((item, index) => {
-        if (item.children) {
-          if(item.children[0].meta.belong == 'ad'){
-            item.splice(index, 1)
-          }else{
-            for (let i = 0; i < item.children.length; i++) {
-            if (item.children[i].meta.belong !== auth && item.children[i].meta.belong !== "all") {
-              console.log("path",item.children[i].path)
-              item.children.splice(i, 1);
-            }
-          }
+        } else {
+          if (item.meta.belong == role || item.meta.belong == "all") {
+            this.filterMenu.push(item);
           }
         }
-        this.filterMenu.push(item);
       });
-      }
     },
   },
 
   mounted() {
-    this.routes(this.Auth);
+    this.routes();
   },
 };
 </script>

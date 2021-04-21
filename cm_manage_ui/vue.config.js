@@ -31,19 +31,19 @@ module.exports = {
   lintOnSave: false, // 关闭eslint
   productionSourceMap: false,
   devServer: {
-    host: '0.0.0.0',
-    port: port,
+    host: '127.0.0.1',
+    port: 9528,
     open: true,
-    // proxy: {
-    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
-    //   [process.env.VUE_APP_BASE_API]: {
-    //     target: `http://localhost:8888`,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       ['^' + process.env.VUE_APP_BASE_API]: ''
-    //     }
-    //   }
-    // },
+    proxy: {
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      '/api': {
+        target: `http://127.0.0.1:3000`,
+        changeOrigin: true,
+        pathRewrite: {
+          '/api': ''
+        }
+      }
+    },
     // disableHostCheck: true
     // port: port,
     // open: true,

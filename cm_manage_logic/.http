@@ -1,0 +1,36 @@
+@uri = http://127.0.0.1:3000
+@json = Content-Type: application/json;charset=UTF-8
+
+# 新增承办
+POST {{uri}}/api/users/community/create
+{{json}}
+
+{
+    "test":"body"
+}
+
+###
+
+# 查询承办列表
+GET {{uri}}/api/users/community/getList/1/5
+{{json}}
+
+###
+
+# 登录
+POST {{uri}}/api/sign/login
+{{json}}
+
+{
+    "account":"cm_10641617",
+    "password":"cm123"
+}
+
+###
+# 加密测试
+POST {{uri}}/api/users/test
+{{json}}
+
+{
+    "pwd":"cm123"
+}
