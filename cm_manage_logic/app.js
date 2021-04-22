@@ -14,8 +14,9 @@ var db = mysql.createPool($dbConfig);
 // 引入二级路由
 var indexRouter = require('./routes/index');
 var users = require('./routes/users/users');
-var login = require('./routes/login-out/login')
-var upload = require('./routes/upload/upload')
+var login = require('./routes/login-out/login');
+var upload = require('./routes/upload/upload');
+// var test = require('./routes/test/test');
 
 var app = express();
 
@@ -40,7 +41,8 @@ app.use('/static',express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', users);
 app.use('/api/sign', login);
-app.use('/api/upload', upload)
+app.use('/api/upload', upload);
+// app.use('/api/test', test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
