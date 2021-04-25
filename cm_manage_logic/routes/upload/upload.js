@@ -26,7 +26,7 @@ const imageStorage = multer.diskStorage({
 
 const uploadFile = multer({storage: imageStorage})
 
-upload.post('/image', uploadFile.single("file") ,load.uploadImage) //单图上传
-upload.post('/delFiles' ,load.delFiles) //文件删除
+upload.post('/image', uploadFile.single("file") ,load.uploadImage, load.getUnitInfo) //单图上传
+upload.post('/delFiles' ,load.delFiles, load.getUnitInfo) //文件删除
 
 module.exports = upload

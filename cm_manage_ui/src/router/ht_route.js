@@ -50,7 +50,7 @@ export const ht_route = [
       {
         path: 'employees',
         name: 'Employees',
-        component: () => import('@/views/personnel/index'),
+        component: () => import('@/views/personnel/employees'),
         meta: { title: '职员信息', icon: 'el-icon-info'}
       },
     ]

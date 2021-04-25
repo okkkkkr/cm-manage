@@ -26,6 +26,12 @@ export const cmRoute = [
         meta: { title: '我的消息', icon: 'el-icon-user-solid'},
       },
       {
+        path: 'publish',
+        name: 'publish',
+        component: () => import('@/views/related/publish_info'),
+        meta: { title: '活动信息', icon: 'el-icon-s-ticket'}
+      },
+      {
         path: 'activityInfo',
         name: 'ActivityInfo',
         // hidden: true,
@@ -38,12 +44,6 @@ export const cmRoute = [
         // hidden: true,
         component: () => import('@/views/related/host_details'),
         meta: { title: '承办方详情', icon: 'el-icon-s-ticket'}
-      },
-      {
-        path: 'publish',
-        name: 'publish',
-        component: () => import('@/views/related/publish_info'),
-        meta: { title: '活动发布', icon: 'el-icon-s-ticket'}
       }
     ]
   },
@@ -56,11 +56,19 @@ export const cmRoute = [
       {
         path: 'index',
         name: 'residents',
-        component: () => import('@/views/personnel/index'),
+        component: () => import('@/views/personnel/residents'),
         meta: { title: '居民信息', icon: 'el-icon-info'}
+      },
+      {
+        path: 'list',
+        name: 'List',
+        hidden: true,
+        component: () => import('@/views/personnel/resident_list'),
+        meta: { title: '居民列表', icon: 'el-icon-info'}
       },
     ]
   },
+  
   {
     path: '/cm-process',
     component: Layout,

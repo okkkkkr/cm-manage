@@ -102,6 +102,10 @@
         也完全能够为复杂的单页应用提供驱动。
       </div>
 
+      <div class="separator" style="height: 20px"></div>
+
+      <el-button type="warning" plain>活动已发布</el-button>
+
       <el-row class="signUp">
         <el-col :span="3"> <i class="el-icon-data-line"></i> 报名进度 </el-col>
         <el-col :span="18">

@@ -1,4 +1,4 @@
-.host {
+.unit {
     &-container {
       background-color: #fdfdfd;
       min-height: 100vh;
@@ -27,15 +27,8 @@
       line-height: 30px;
       text-align: center;
     }
-  
-    .choseItem {
-      font-size: 24px;
-      font-weight: bold;
-      cursor: pointer;
-      color: #409eff;
-    }
   }
-
+  
   .unit-name {
     font-size: 20px;
     font-weight: bold;
@@ -48,15 +41,23 @@
     font-size: 14px;
   }
   
-  
-  .host-wrapper {
-    max-height: 70vh;
-    overflow-y: scroll;
-    padding: 15px;
-    background-color: #F7F7F7;
-    border-radius: 5px;
+  .place-pic {
+    position: relative;
+    .place-tips {
+      width: 100%;
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      background-color: #f7f7f7;
+      opacity: 0.5;
+    }
   }
   
-  .host-wrapper::-webkit-scrollbar{
-    display: none;
+  /deep/.el-card__header {
+    background-color: #f7f7f7;
+    padding: 10px 20px;
+  }
+  
+  /deep/.el-carousel__container {
+    margin-left: 5%;
   }

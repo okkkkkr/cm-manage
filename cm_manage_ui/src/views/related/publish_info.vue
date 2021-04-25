@@ -2,7 +2,10 @@
   <div class="activity-container">
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;">
         <span>关键指标</span>
+        <el-button type="text" style="font-size: 16px;">发起活动</el-button>
+        </div>
       </div>
       <el-row class="">
         <el-col :span="12">

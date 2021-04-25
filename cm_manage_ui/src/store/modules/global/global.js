@@ -4,10 +4,10 @@ import {getToken} from '@/utils/auth'
 import {getLocal} from '@/utils/handleCache'
 
 const state = {
-    // role: getLocal('role'),
+    // role: JSON.parse(getLocal('role')),
     // token: getToken(),
-    // userInfo: JSON.parse(getLocal('userInfo')),
-    // unitInfo: JSON.parse(getLocal('unitInfo')),
+    // userData: JSON.parse(JSON.parse(getLocal('userInfo'))),
+    // unitData: JSON.parse(JSON.parse(getLocal('unitInfo'))),
     cm_limit:{},
     ht_limit:{},
     ad_limit:{},

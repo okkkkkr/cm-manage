@@ -5,6 +5,7 @@ const getters = {
   avatar: state => state.user.avatar,
   // role: state => state.global.role
   // name: state => state.user.name
-  baseAction: state => state.settings.baseAction
+  baseAction: state => state.settings.baseAction,
+  unitInfo: state => state.global.unitInfo
 }
 export default getters

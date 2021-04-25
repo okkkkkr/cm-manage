@@ -34,3 +34,15 @@ POST {{uri}}/api/users/test
 {
     "pwd":"cm123"
 }
+
+###
+# 个体管理员列表信息测试
+POST {{uri}}/api/manager/getList
+{{json}}
+
+{
+    "pageNum": "1",
+    "pageSize": "10",
+    "role": "cm",
+    "guid": "063bb750-a065-11eb-8cb2-65d35e5b7d8d"
+}

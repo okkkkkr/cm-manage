@@ -69,3 +69,12 @@ export function getManagerById(data) {
   })
 }
 
+// 通过ID查询管理者/登陆者信息
+export function modifyInfo(data) {
+  return request({
+    url: `/api/users/unit/modifyInfo`,
+    method: 'post',
+    data
+  })
+}
+

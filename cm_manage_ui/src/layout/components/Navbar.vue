@@ -8,14 +8,14 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img
-            src="../../assets/images/homePage/minner.jpg"
+            :src="logo"
             class="user-avatar"
           />
           <div class="account-info">
             <div class="role">
-              社区方
+              {{role}}
             </div>
-            <div class="name">龙珠花园</div>
+            <div class="name">{{cn_name}}</div>
           </div>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -38,6 +38,7 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
+import {getLocal} from '@/utils/handleCache'
 
 export default {
   components: {
@@ -49,7 +50,9 @@ export default {
   },
   data() {
     return {
-      
+      cn_name: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_name,
+      logo: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_logo,
+      role: JSON.parse(getLocal('role')) == 'cm' ? '社区方':'承办方'
     };
   },
   methods: {

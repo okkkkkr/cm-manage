@@ -25,13 +25,13 @@
 
         </el-col>
         <el-col :span="21">
-          <div class="unit-name">北理珠青年志愿者协会</div>
+          <div class="unit-name">{{unitInfo.name}}</div>
           <div class="unit-basic">
             <el-row :gutter="20">
               <el-col :span="12">
                 <el-input
                   placeholder="请输入联系方式"
-                  v-model="phone"
+                  v-model="unitInfo.phone"
                   clearable
                   suffix-icon="el-icon-phone"
                 >
@@ -40,7 +40,7 @@
               <el-col :span="12"
                 ><el-input
                   placeholder="请输入地址"
-                  v-model="location"
+                  v-model="unitInfo.location"
                   clearable
                   suffix-icon="el-icon-location"
                 >
@@ -60,7 +60,7 @@
           type="textarea"
           :rows="2"
           placeholder="请输入内容"
-          v-model="introduce"
+          v-model="unitInfo.introduce"
           maxlength="200"
           show-word-limit
         >
@@ -73,7 +73,7 @@
           <p>
             <i class="el-icon-picture-outline-round"></i>
             承办方图片介绍<span style="color: #409eff; font-weight: bold"
-              >（图片3~5张）</span
+              >（图片不可超过5张）</span
             >
           </p>
           <el-upload
@@ -87,17 +87,19 @@
             :auto-upload="true"
             :data="attachedInd"
             :before-remove="beforeRemove"
+            :on-success="handleIndSuccess"
+            :limit='5'
           >
             <el-button slot="trigger" size="middle" type="primary"
               >点击上传</el-button
             >
             <div slot="tip" class="el-upload__tip">
-              只能上传jpg/png文件，且不超过500kb
+              只能上传jpg/png文件，且图片大小不超过2M / 张
             </div>
           </el-upload>
         </el-col>
         <el-col :span="4" class="submit-btn">
-          <el-button type="primary">提交</el-button>
+          <el-button @click="submitForm()" type="primary">提交</el-button>
           <el-button type="danger">取消</el-button>
         </el-col>
       </el-row>
@@ -107,13 +109,23 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getLocal } from "../../utils/handleCache";
+import { getLocal,setLocal } from "../../utils/handleCache";
 import { delFiles } from "@/api/files";
+import { modifyInfo } from "@/api/user"
 import { notice } from "../../utils/message";
 
 export default {
   data() {
     return {
+      orderState: "全部",
+      unitInfo: {
+        guid:"",
+        name:"",
+        location: "",
+        phone: "",
+        introduce:"",
+        role:""
+      },
       attachedLogo: {
         _id: JSON.parse(JSON.parse(getLocal("unitInfo"))).cm_account,
         type:"logo",
@@ -125,47 +137,7 @@ export default {
         role: JSON.parse(getLocal("role"))
       },
       logo:"",
-      fileList: [
-        // {
-        //   name: "a83a4c9603c4439938bba14a49d7aca.png",
-        //   url:
-        //     "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=302487973,3701014649&fm=26&gp=0.jpg",
-        // },
-        // {
-        //   name: "login_bc.png",
-        //   url:
-        //     "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2239203324,1371079426&fm=26&gp=0.jpg",
-        // },
-      ],
-      orderState: "全部",
-      location: "广东省珠海市香洲区金凤路10号",
-      phone: "0756-7732832",
-      introduce:
-        "Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue被设计为可以自底向上逐层应用。Vue的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue也完全能够为复杂的单页应用提供驱动。",
-      site: [
-        {
-          src:
-            "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=302487973,3701014649&fm=26&gp=0.jpg",
-        },
-        {
-          src:
-            "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1697271975,1733929650&fm=26&gp=0.jpg",
-        },
-        {
-          src:
-            "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2239203324,1371079426&fm=26&gp=0.jpg",
-        },
-        {
-          src:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1400537201,154413284&fm=26&gp=0.jpg",
-        },
-      ],
-      siteList: [
-        "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=302487973,3701014649&fm=26&gp=0.jpg",
-        "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1697271975,1733929650&fm=26&gp=0.jpg",
-        "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2239203324,1371079426&fm=26&gp=0.jpg",
-        "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1400537201,154413284&fm=26&gp=0.jpg",
-      ],
+      fileList: [],
     };
   },
 
@@ -175,6 +147,11 @@ export default {
     ...mapGetters(["baseAction"]),
   },
 
+  mounted() {
+    this.setInfo();
+    this.setFileList();
+  },
+
   methods: {
     handleRemove(file, fileList) {
       delFiles({
@@ -182,7 +159,10 @@ export default {
         _id: this.attachedInd._id,
       })
         .then((res) => {
+          console.log("111111",res)
           notice("success", res.message);
+          console.log(res)
+          setLocal('unitInfo', JSON.stringify(res.data[0]));
         })
         .catch((err) => {
           notice("error", res.message);
@@ -198,7 +178,54 @@ export default {
 
     handleAvatarSuccess(res, file){
       this.logo = res.data
+      setLocal('unitInfo', JSON.stringify(res.data[0]));
+      this.logo = res.data[0].cm_logo
+    },
+    handleIndSuccess(res, file){
+      console.log("res",res.data[0])
+      setLocal('unitInfo', JSON.stringify(res.data[0]));
+    },
+
+    setInfo(){
+      let info = JSON.parse(JSON.parse(getLocal('unitInfo')));
+      let role = JSON.parse(getLocal('role'))
+      this.unitInfo.guid = info.guid
+      this.unitInfo.name = role == 'cm' ? info.cm_name : info.ht_name
+      this.unitInfo.phone = role == 'cm' ? info.cm_phone : info.ht_phone
+      this.unitInfo.location = role == 'cm' ? info.cm_address : info.ht_address
+      this.unitInfo.introduce = role == 'cm' ? info.cm_introduce : info.ht_introduce
+      this.logo = role == 'cm' ? info.cm_logo : info.ht_logo
+    },
+
+    setFileList(){
+      let info = JSON.parse(JSON.parse(getLocal('unitInfo')));
+      if(JSON.parse(getLocal('role')) == 'cm'){
+        let imgList = JSON.parse(info.cm_image);
+        imgList.forEach(item => {
+          let num = item.split('/').length;
+          let imgName = item.split('/')[num - 1];
+          this.fileList.push({name: imgName, url: item});
+        });
+      }else{
+        let imgList = JSON.parse(info.ht_image);
+        imgList.forEach(item => {
+          let num = item.split('/').length;
+          let imgName = item.split('/')[num - 1];
+          this.fileList.push({name: imgName, url: item});
+        });
+      }
+    },
+
+    submitForm(){
+      this.unitInfo.role = JSON.parse(getLocal('role'));
+      modifyInfo(this.unitInfo).then(res => {
+        notice('success', res.message);
+        this.$router.push({path: '/unit'})
+      }).catch(err => {
+        notice('error', "服务器出错，修改信息失败！")
+      })
     }
+
   },
 };
 </script>

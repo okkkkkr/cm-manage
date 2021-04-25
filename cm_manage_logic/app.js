@@ -16,6 +16,8 @@ var indexRouter = require('./routes/index');
 var users = require('./routes/users/users');
 var login = require('./routes/login-out/login');
 var upload = require('./routes/upload/upload');
+var manager = require('./routes/manager/manager')
+var residents = require('./routes/residents/residents')
 // var test = require('./routes/test/test');
 
 var app = express();
@@ -42,6 +44,8 @@ app.use('/', indexRouter);
 app.use('/api/users', users);
 app.use('/api/sign', login);
 app.use('/api/upload', upload);
+app.use('/api/manager', manager)
+app.use('/api/residents', residents)
 // app.use('/api/test', test);
 
 // catch 404 and forward to error handler

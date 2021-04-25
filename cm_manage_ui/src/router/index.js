@@ -25,7 +25,7 @@ export default [
   {
     path: '/personal',
     component: Layout,
-    // hidden: true,
+    hidden: true,
     meta: { belong: "all" },
     children: [
       {
