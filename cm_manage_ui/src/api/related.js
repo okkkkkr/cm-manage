@@ -45,3 +45,20 @@ export function delManager(data){
   })
 }
 
+// 获取有效期内的活动项目（下拉框）
+export function getValidActivityByGuid(data){
+  return request({
+    url: '/api/activity/getValidActivityByGuid',
+    method: 'post',
+    data
+  })
+}
+
+// 获取有效期内的活动项目
+export function getTypeList(){
+  return request({
+    url: '/api/activity/getTypeList',
+    method: 'get'
+  })
+}
+

@@ -15,13 +15,11 @@
             <div class="role">
               {{role}}
             </div>
-            <div class="name">{{cn_name}}</div>
+            <div class="name">{{name}}</div>
           </div>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/unit">
-            <el-dropdown-item>我的主页</el-dropdown-item>
-          </router-link>
+          
           <router-link to="/">
             <el-dropdown-item divided> 注销登录 </el-dropdown-item>
           </router-link>
@@ -50,8 +48,8 @@ export default {
   },
   data() {
     return {
-      cn_name: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_name,
-      logo: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_logo,
+      name: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_name || JSON.parse(JSON.parse(getLocal('unitInfo'))).ht_name,
+      logo: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_logo || JSON.parse(JSON.parse(getLocal('unitInfo'))).ht_logo,
       role: JSON.parse(getLocal('role')) == 'cm' ? '社区方':'承办方'
     };
   },

@@ -273,6 +273,10 @@ exports.updateInfo = async (req, res) => {
         sql = `UPDATE ${tableName} SET ? WHERE guid = '${req.body.guid}'`;
     }
     query(sql, data).then(result => {
-        res.send(initRES(200, "信息已更新！"));
+        let sql_search = `SELECT * FROM ${tableName} WHERE guid = '${req.body.guid}'`
+        query(sql_search).then(result2 => {
+            res.send(initRES(200, "信息已更新！", result2[0]));
+        })
+        
     })
 }

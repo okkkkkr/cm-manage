@@ -3,6 +3,21 @@ import Layout from '@/layout'
 
 export const cmRoute = [
   {
+    path: '/personal',
+    component: Layout,
+    hidden: true,
+    meta: { belong: "cm" },
+    children: [
+      {
+        path: 'set',
+        name: 'Set',
+        component: () => import('@/views/unit/unit_details'),
+        meta: { title: '个人信息修改', icon: 'el-icon-user-solid'}
+      }
+      
+    ]
+  },
+  {
     path: '/cm-related',
     component: Layout,
     meta: { title: '相关信息', icon: 'el-icon-share', belong: 'cm' },
@@ -22,7 +37,7 @@ export const cmRoute = [
       {
         path:'inform',
         name:'Inform',
-        component: () => import('@/views/related/my_inform'),
+        component: () => import('@/views/related/inform'),
         meta: { title: '我的消息', icon: 'el-icon-user-solid'},
       },
       {
@@ -81,8 +96,8 @@ export const cmRoute = [
         meta: { title: '活动流程', icon: 'el-icon-s-claim' }
       },
       {
-        path: 'details',
-        name: 'Details',
+        path: '/activity/details',
+        name: 'ACDetails',
         component: () => import('@/views/process/process_details'),
         meta: { title: '活动流程详情', icon: 'el-icon-s-order' }
       },
@@ -91,6 +106,13 @@ export const cmRoute = [
         name: 'Order',
         component: () => import('@/views/process/order'),
         meta: { title: '活动申办工单', icon: 'el-icon-s-order' }
+      },
+      {
+        path: '/order/details',
+        name: 'ORDetails',
+        hidden: true,
+        component: () => import('@/views/process/order_details'),
+        meta: { title: '活动工单详情', icon: 'el-icon-s-order' }
       }
     ]
   },

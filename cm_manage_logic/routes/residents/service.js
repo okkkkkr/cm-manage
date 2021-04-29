@@ -42,6 +42,14 @@ exports.getResidentsList = async(req, res) => {
     })
 }
 
+// 查询居民数量
+exports.getResidentsNum = async(req, res) => {
+    let sql = `SELECT COUNT(cm_residents_id) as num FROM cm_residents WHERE cm_guid = ? `
+    query(sql, req.body.guid).then(result => {
+        res.send(initRES(200, "查询成功", result[0]))
+    })
+}
+
 // Update
 // 修改居民信息
 exports.modifyResidents = async(req, res) => {

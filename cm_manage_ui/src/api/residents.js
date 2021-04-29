@@ -35,3 +35,12 @@ export function delResidents(data) {
     data
   })
 }
+
+// 查看居民数量
+export function getResidentsNum(data) {
+  return request({
+    url: '/api/residents/getResidentsNum',
+    method: 'post',
+    data
+  })
+}

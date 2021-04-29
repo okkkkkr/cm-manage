@@ -126,14 +126,14 @@ export default {
         role: "",
       },
       attachedLogo: {
-        _id: JSON.parse(JSON.parse(getLocal("unitInfo"))).cm_account,
+        _id: JSON.parse(JSON.parse(getLocal("unitInfo"))).ht_account,
         type: "logo",
-        role: "cm",
+        role: "ht",
       },
       attachedInd: {
-        _id: JSON.parse(JSON.parse(getLocal("unitInfo"))).cm_account,
+        _id: JSON.parse(JSON.parse(getLocal("unitInfo"))).ht_account,
         type: "introduce",
-        role: "cm",
+        role: "ht",
       },
       logo: "",
       fileList: [],
@@ -187,19 +187,18 @@ export default {
 
     setInfo() {
       let info = JSON.parse(JSON.parse(getLocal("unitInfo")));
-      let role = JSON.parse(getLocal("role"));
       this.unitInfo.guid = info.guid;
-      this.unitInfo.name = info.cm_name;
-      this.unitInfo.phone = info.cm_phone;
-      this.unitInfo.location = info.cm_address;
-      this.unitInfo.introduce = info.cm_introduce;
-      this.logo = info.cm_logo;
+      this.unitInfo.name = info.ht_name;
+      this.unitInfo.phone = info.ht_phone;
+      this.unitInfo.location = info.ht_address;
+      this.unitInfo.introduce = info.ht_introduce;
+      this.logo = info.ht_logo;
     },
 
     setFileList() {
       let info = JSON.parse(JSON.parse(getLocal("unitInfo")));
-      if (info.cm_image) {
-        let imgList = JSON.parse(info.cm_image);
+      if (info.ht_image) {
+        let imgList = JSON.parse(info.ht_image);
         imgList.forEach((item) => {
           let num = item.split("/").length;
           let imgName = item.split("/")[num - 1];
@@ -209,12 +208,12 @@ export default {
     },
 
     submitForm() {
-      this.unitInfo.role = "cm";
-      console.log(unitInfo)
+      this.unitInfo.role = "ht";
       modifyInfo(this.unitInfo)
         .then((res) => {
           notice("success", res.message);
-          this.$router.push({ path: "/unit" });
+          setLocal("unitInfo", JSON.stringify(res.data));
+          this.$router.push({ path: "/unit/ht" });
         })
         .catch((err) => {
           notice("error", "服务器出错，修改信息失败！");

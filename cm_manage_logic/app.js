@@ -18,6 +18,9 @@ var login = require('./routes/login-out/login');
 var upload = require('./routes/upload/upload');
 var manager = require('./routes/manager/manager')
 var residents = require('./routes/residents/residents')
+var activity = require('./routes/activity/activity')
+var inform = require('./routes/inform/inform')
+var order = require('./routes/order/order')
 // var test = require('./routes/test/test');
 
 var app = express();
@@ -46,6 +49,9 @@ app.use('/api/sign', login);
 app.use('/api/upload', upload);
 app.use('/api/manager', manager)
 app.use('/api/residents', residents)
+app.use('/api/activity', activity)
+app.use('/api/inform', inform)
+app.use('/api/order', order)
 // app.use('/api/test', test);
 
 // catch 404 and forward to error handler

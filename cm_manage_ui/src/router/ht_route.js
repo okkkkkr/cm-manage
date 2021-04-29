@@ -3,6 +3,34 @@ import Layout from '@/layout'
 
 export const ht_route = [
   {
+    path: '/unit',
+    component: Layout,
+    meta: { belong: 'ht' },
+    children: [
+      {
+        path: 'ht',
+        name: 'Ht',
+        component: () => import('@/views/unit/host_index'),
+        meta: { title: '个体信息', icon: 'el-icon-user-solid'}
+      },
+    ]
+  },
+  {
+    path: '/ht-personal',
+    component: Layout,
+    hidden: true,
+    meta: { belong: "ht" },
+    children: [
+      {
+        path: 'set',
+        name: 'Set',
+        component: () => import('@/views/unit/host_details'),
+        meta: { title: '个人信息修改', icon: 'el-icon-user-solid'}
+      }
+      
+    ]
+  },
+  {
     path: '/ht-related',
     component: Layout,
     meta: { title: '相关信息', icon: 'el-icon-share', belong: 'ht' },
@@ -22,26 +50,25 @@ export const ht_route = [
       {
         path:'inform',
         name:'Inform',
-        component: () => import('@/views/related/my_inform'),
+        component: () => import('@/views/related/inform'),
         meta: { title: '我的消息', icon: 'el-icon-user-solid'},
       },
       {
         path: 'activityInfo',
         name: 'ActivityInfo',
-        hidden: true,
+        // hidden: true,
         component: () => import('@/views/related/activity_info'),
         meta: { title: '活动详情', icon: 'el-icon-s-ticket'}
       },
       {
         path: 'cmDetails',
         name: 'CmDetails',
-        hidden: true,
+        // hidden: true,
         component: () => import('@/views/related/host_details'),
         meta: { title: '社区方详情', icon: 'el-icon-s-ticket'}
       }
     ]
   },
-
   {
     path: '/personnel',
     component: Layout,
@@ -77,6 +104,13 @@ export const ht_route = [
         name: 'Order',
         component: () => import('@/views/process/order'),
         meta: { title: '活动申办工单', icon: 'el-icon-s-order' }
+      },
+      {
+        path: '/order/details',
+        name: 'ORDetails',
+        hidden: true,
+        component: () => import('@/views/process/order_details'),
+        meta: { title: '活动工单详情', icon: 'el-icon-s-order' }
       }
     ]
   },

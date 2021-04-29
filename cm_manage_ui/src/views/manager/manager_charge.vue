@@ -175,7 +175,7 @@
         <el-table-column prop="_id" label="管理者Id" width="180">
         </el-table-column>
         <el-table-column
-          :prop="role == 'cm' ? 'cm_manager_name' : 'ht_manager_name'"
+          prop="manager_name"
           label="姓名"
           sortable
           width="140"
@@ -384,7 +384,7 @@ export default {
         this.managerForm.guid = row.cm_guid;
         this.managerForm.manager_age = row.cm_manager_age;
         this.managerForm.manager_card = row.cm_manager_card;
-        this.managerForm.manager_name = row.cm_manager_name;
+        this.managerForm.manager_name = row.manager_name;
         this.managerForm.manager_phone = row.cm_manager_phone;
         this.managerForm.manager_place = row.cm_manager_place;
         this.managerForm.manager_position = row.cm_manager_position;
@@ -394,7 +394,7 @@ export default {
         this.managerForm.guid = row.ht_guid;
         this.managerForm.manager_age = row.ht_manager_age;
         this.managerForm.manager_card = row.ht_manager_card;
-        this.managerForm.manager_name = row.ht_manager_name;
+        this.managerForm.manager_name = row.manager_name;
         this.managerForm.manager_phone = row.ht_manager_phone;
         this.managerForm.manager_place = row.ht_manager_place;
         this.managerForm.manager_position = row.ht_manager_position;

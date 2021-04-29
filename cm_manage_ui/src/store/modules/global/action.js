@@ -40,7 +40,7 @@ export const actions = {
                   setLocal('userInfo', JSON.stringify(res.data))
                   resolve(res);
                }else{
-                  const userTable = role == 'ht' ? 'ht_employees' : 'cm_manager';
+                  const userTable = role == 'ht' ? 'ht_manager' : 'cm_manager';
                   getManagerById({account: account, tableName: userTable}).then(res => {
                      setLocal('userInfo', JSON.stringify(res.data))
                   })

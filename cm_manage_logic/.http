@@ -46,3 +46,14 @@ POST {{uri}}/api/manager/getList
     "role": "cm",
     "guid": "063bb750-a065-11eb-8cb2-65d35e5b7d8d"
 }
+
+###
+#获取工单信息测试
+POST {{uri}}/api/order/getFOrderList
+{{json}}
+
+{
+    "guid":"063bb750-a065-11eb-8cb2-65d35e5b7d8d",
+    "role":"cm"
+}
+

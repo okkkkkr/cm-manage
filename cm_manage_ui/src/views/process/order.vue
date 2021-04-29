@@ -2,19 +2,19 @@
   <div class="order-container">
     <div class="order-info">
       <span class="order-status">执行中</span>
-      <span class="order-nums">12</span>
-      <div class="order-item" style="margin-left: 50px;">
+      <span class="order-nums">{{ ongoingList.length }}</span>
+      <div class="order-item" style="margin-left: 50px">
         合作承办方: <span class="item-name" style="color: #409eff">全部</span>
       </div>
       <div class="order-item">
         当前项目: <span class="item-name" style="color: #409eff">全部</span>
       </div>
     </div>
-    <div class="ongoing">
+    <div class="ongoing" v-if="ongoingList.length != 0">
       <el-card
         style="margin-top: 5px"
         class="box-card"
-        v-for="item in ongoingList"
+        v-for="(item, index) in ongoingList"
         :key="item.ac_order_id"
       >
         <el-collapse @change="handleChange">
@@ -29,8 +29,8 @@
                 >
                   <el-card>
                     <h4>创建并发起工单</h4>
-                    <p>受理方：{{ item.ht_manager_name }}</p>
-                    <p>发起日期：{{ item.order_start_time }}</p>
+                    <p>受理方：{{ item.ht_name }}</p>
+                    <p>发起日期：{{ item.detail[0].order_submit_time }}</p>
                     <p v-if="item.detail[0].order_file">
                       相关文件：{{ item.detail[0].order_file }}
                     </p>
@@ -155,6 +155,11 @@
                 </el-timeline-item>
               </el-timeline>
             </div>
+            <div style="width: 100%; text-align: right">
+              <el-button @click="viewDetails('T',index)" type="primary" plain
+                >查看详情</el-button
+              >
+            </div>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -164,7 +169,7 @@
 
     <div class="order-info">
       <span class="order-status">已结束</span>
-      <span class="order-nums">12</span>
+      <span class="order-nums">{{ finishedList.length }}</span>
       <div class="order-item">
         合作承办方: <span class="item-name" style="color: #409eff">全部</span>
       </div>
@@ -195,11 +200,11 @@
         </el-dropdown>
       </div>
     </div>
-    <div class="finished">
+    <div class="finished" v-if="finishedList.length != 0">
       <el-card
         class="box-card"
         style="margin-top: 10px"
-        v-for="item in finishedList"
+        v-for="(item, index) in finishedList"
         :key="item.ac_order_id"
       >
         <el-collapse @change="handleChange">
@@ -214,8 +219,8 @@
                 >
                   <el-card>
                     <h4>创建并发起工单</h4>
-                    <p>受理方：{{ item.ht_manager_name }}</p>
-                    <p>发起日期：{{ item.order_start_time }}</p>
+                    <p>受理方：{{ item.ht_name }}</p>
+                    <p>发起日期：{{ item.detail[0].order_submit_time }}</p>
                     <p v-if="item.detail[0].order_file">
                       相关文件：{{ item.detail[0].order_file }}
                     </p>
@@ -240,7 +245,7 @@
                   :timestamp="
                     item.detail[1] == null
                       ? '待承办方一审'
-                      : item.detail[1].order_state == 11
+                      : item.detail[1].order_state == '11'
                       ? '承办方一审通过，待提交相关文件'
                       : item.detail[1].order_state == '12'
                       ? '承办方一审通过，相关文件已提交'
@@ -249,7 +254,7 @@
                   :icon="
                     item.detail[1] == null
                       ? ''
-                      : item.detail[1].order_state == 11
+                      : item.detail[1].order_state == '11'
                       ? 'el-icon-loading'
                       : item.detail[1].order_state == '12'
                       ? 'el-icon-check'
@@ -258,7 +263,7 @@
                   :type="
                     item.detail[1] == null
                       ? ''
-                      : item.detail[1].order_state == 11
+                      : item.detail[1].order_state == '11'
                       ? 'warning'
                       : item.detail[1].order_state == '12'
                       ? 'success'
@@ -266,7 +271,7 @@
                   "
                   placement="top"
                 >
-                  <el-card>
+                  <el-card v-if="item.detail[1]">
                     <h4>承办方一审</h4>
                     <p>提交日期：{{ item.detail[1].order_submit_time }}</p>
                     <p v-if="item.detail[1].order_file">
@@ -313,7 +318,7 @@
                   "
                   placement="top"
                 >
-                  <el-card>
+                  <el-card v-if="item.detail[2]">
                     <h4>社区方二审</h4>
                     <p>提交日期：{{ item.detail[2].order_submit_time }}</p>
                     <p v-if="item.detail[2].order_file">
@@ -360,7 +365,7 @@
                   "
                   placement="top"
                 >
-                  <el-card>
+                  <el-card v-if="item.detail[3]">
                     <h4>承办方终审</h4>
                     <p>提交日期：{{ item.detail[3].order_submit_time }}</p>
                     <p v-if="item.detail[3].order_file">
@@ -410,6 +415,11 @@
                 </el-timeline-item>
               </el-timeline>
             </div>
+            <div style="width: 100%; text-align: right">
+              <el-button @click="viewDetails('F',index)" type="primary" plain
+                >查看详情</el-button
+              >
+            </div>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -418,133 +428,17 @@
 </template>
 
 <script>
+import { getTOrderList, getFOrderList } from "@/api/order";
+import { getLocal } from "@/utils/handleCache";
+import { notice } from "@/utils/message";
+
 export default {
   name: "Warehouse",
   data() {
     return {
       orderState: "全部",
-      ongoingList: [
-        {
-          ac_order_id: "123",
-          ac_order_name: "活动工单1",
-          order_start_time: "2018/4/2 20:46",
-          cm_residents_name: "发起人",
-          ht_manager_name: "受理方",
-          detail: [
-            {
-              order_state: "0",
-              order_file: "",
-              order_image: "",
-              order_describe: "",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-            {
-              order_state: "12",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-          ],
-        },
-        {
-          ac_order_id: "1234",
-          ac_order_name: "活动工单2",
-          detail: [
-            {
-              order_state: "0",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-            {
-              order_state: "12",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-            {
-              order_state: "21",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-          ],
-        },
-        {
-          ac_order_id: "1235",
-          ac_order_name: "活动工单3",
-          order_start_time: "2018/4/2 20:46",
-          cm_residents_name: "发起人",
-          ht_manager_name: "受理方",
-          detail: [
-            {
-              order_state: "0",
-              order_file: "",
-              order_image: "",
-              order_describe: "",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-            {
-              order_state: "11",
-              order_file: "",
-              order_image: "",
-              order_describe: "",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-          ],
-        },
-      ],
-      finishedList: [
-        {
-          ac_order_id: "12345",
-          ac_order_name: "活动工单8",
-          detail: [
-            {
-              order_state: "0",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-            {
-              order_state: "12",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-            {
-              order_state: "21",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-            {
-              order_state: "31",
-              order_file: "工单提交的文件",
-              order_image: "工单提交的图片",
-              order_describe: "工单提交的描述",
-              order_submit_time: "2018/4/2 20:46",
-              order_handler_name: "处理人",
-            },
-          ],
-        },
-      ],
+      ongoingList: [],
+      finishedList: [],
     };
   },
 
@@ -552,6 +446,9 @@ export default {
 
   computed: {},
 
+  mounted() {
+    this.getList();
+  },
   methods: {
     handleChange(val) {
       console.log(val);
@@ -560,9 +457,33 @@ export default {
     handleCommand(command) {
       this.orderState = command;
     },
+
+    viewDetails(type,index){
+      if(type == 'T'){
+        this.$router.push({path:'/order/details', query:{info: this.ongoingList[index]}})
+      }else{
+        this.$router.push({path:'/order/details', query:{info: this.finishedList[index]}})
+      }
+    },
+
+    getList() {
+      getTOrderList({
+        guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
+        role: JSON.parse(getLocal("role")),
+      }).then((res) => {
+        this.ongoingList = res.data;
+      });
+
+      getFOrderList({
+        guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
+        role: JSON.parse(getLocal("role")),
+      }).then((res) => {
+        this.finishedList = res.data;
+      });
+    },
   },
 };
 </script>
 <style lang='less' scoped>
-  @import '../../styles/process/order.less';
+@import "../../styles/process/order.less";
 </style>

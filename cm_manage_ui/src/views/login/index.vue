@@ -111,23 +111,30 @@ export default {
 
     // 登录
     handleLogin() {
-      var role = JSON.parse(getLocal("role"));
+      
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.LOGIN(this.loginForm).then((response) => {
-            if (response == 'TokenPass') {
-              if (role != "ad") {
+            var role = JSON.parse(getLocal("role"));
+            if (response == "TokenPass") {
+              if (role == "cm") {
                 this.$router.push({ path: "/unit" });
-              } else {
+              } else if (role == "ad") {
                 this.$router.push({ path: "/ad-audit/index" });
+              } else {
+                this.$router.push({ path: "/unit/ht" });
               }
             } else {
+              
               this.GET_INFO(response).then((res) => {
+                console.log("res",res)
                 notice("success", "登录成功");
-                if (role != "ad") {
+                if (response.role == "cm") {
                   this.$router.push({ path: "/unit" });
-                } else {
+                } else if (response.role == "ad") {
                   this.$router.push({ path: "/ad-audit/index" });
+                } else {
+                  this.$router.push({ path: "/unit/ht" });
                 }
               });
             }

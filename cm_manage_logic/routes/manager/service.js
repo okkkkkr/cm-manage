@@ -9,7 +9,7 @@ exports.addCmManager = async (req, res) => {
     sqlAccount = `INSERT INTO account SET ?`
     let managerData = {
         _id: req.body._id,
-        cm_manager_name: req.body.manager_name,
+        manager_name: req.body.manager_name,
         cm_manager_age: req.body.manager_age,
         cm_manager_sex: req.body.manager_sex,
         cm_manager_place: req.body.manager_place,
@@ -40,7 +40,7 @@ exports.addHtManager = async (req, res) => {
     sqlAccount = `INSERT INTO account SET ?`
     let managerData = {
         _id: req.body._id,
-        ht_manager_name: req.body.manager_name,
+        manager_name: req.body.manager_name,
         ht_manager_age: req.body.manager_age,
         ht_manager_sex: req.body.manager_sex,
         ht_manager_place: req.body.manager_place,
@@ -141,7 +141,10 @@ exports.modifyManager = async(req, res) => {
 exports.delManager = async(req, res) => {
     let tableName = req.body.role == 'cm' ? 'cm_manager' : 'ht_manager'
     sqlDel = `DELETE FROM ${tableName} WHERE _id = ?`;
+    sqlAC = `DELETE FROM account WHERE account = ?`
     query(sqlDel, req.body._id).then(() => {
-        res.send(initRES(200, "管理员信息已清理"));
+        query(sqlAC, req.body._id).then(() => {
+            res.send(initRES(200, "管理员信息已清理"));
+        })
     })
 }

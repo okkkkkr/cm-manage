@@ -94,8 +94,7 @@ exports.delFiles = async (req, res, next) => {
     }
 
     query(sqlSearch, req.body._id).then(result => {
-        console.log("result",JSON.parse(result[0].cm_image))
-        let imgList = JSON.parse(result[0].cm_image)
+        let imgList = req.body._id.substring(0,2) == 'cm' ? JSON.parse(result[0].cm_image) : JSON.parse(result[0].ht_image)
         imgList.forEach(item => {
             let num = item.split('/').length;
             let imgName = item.split('/')[num - 1];
@@ -107,5 +106,4 @@ exports.delFiles = async (req, res, next) => {
             next();
         })
     })
-    // query()
 }

@@ -6,7 +6,7 @@
         <el-button
           style="float: right; padding: 3px 0"
           type="text"
-          @click="routerPush('/personal/set')"
+          @click="routerPush('/ht-personal/set')"
           >修改</el-button
         >
       </div>
@@ -31,10 +31,12 @@
           <p class="unit-basic">
             <i class="el-icon-phone"></i>
             {{ unitInfo.phone }}
+            <i style="margin-left: 20px" class="el-icon-location"></i>
+            {{ unitInfo.location }}
           </p>
           <p class="unit-basic">
-            <i class="el-icon-location"></i>
-            {{ unitInfo.location }}
+            <i class="el-icon-s-order"></i>
+            {{ unitInfo.introduce }}
           </p>
         </el-col>
       </el-row>
@@ -47,7 +49,7 @@
         <span>关键指标</span>
       </div>
       <el-row>
-        <el-col :span="6">
+        <el-col :span="12">
           <div class="indicators">
             <ul>
               <li style="font-size: 12px">活动场次</li>
@@ -57,28 +59,8 @@
             </ul>
           </div>
         </el-col>
-        <el-col :span="6">
-          <div class="indicators">
-            <ul>
-              <li style="font-size: 12px">活动项目</li>
-              <li style="font-size: 24px; font-weight: bold">
-                {{ page.total }}
-              </li>
-            </ul>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="indicators">
-            <ul>
-              <li style="font-size: 12px">社区居民</li>
-              <li style="font-size: 24px; font-weight: bold">
-                {{ indicators.residents }}
-              </li>
-            </ul>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div  class="indicators" style="cursor: pointer;" @click="routerPush('/ht-related/inform')">
+        <el-col :span="12">
+          <div style="cursor: pointer;" @click="routerPush('/ht-related/inform')" class="indicators">
             <ul>
               <li style="font-size: 12px">新的消息</li>
               <li style="font-size: 24px; font-weight: bold">
@@ -117,71 +99,8 @@
             justify-content: space-between;
           "
         >
-          <span>我的项目</span>
-          <el-button type="text" style="font-size: 16px" @click="createUnit()"
-            >新增项目</el-button
-          >
+          <span>我的活动</span>
         </div>
-
-        <el-dialog title="项目信息" :visible.sync="dialogFormVisible">
-          <el-form
-            :model="items_info"
-            status-icon
-            ref="items_info"
-            :rules="rules"
-            label-width="100px"
-            class="demo-items_info"
-            label-position="top"
-          >
-            <el-row :gutter="10">
-              <el-col :span="8">
-                <el-form-item label="项目名称" prop="ac_items_name">
-                  <el-input v-model="items_info.ac_items_name"></el-input>
-                </el-form-item>
-                <el-form-item
-                  label="申办社区(Guid)"
-                  prop="ac_items_holder_guid"
-                >
-                  <el-input
-                    v-model="items_info.ac_items_holder_guid"
-                    disabled
-                  ></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="申办日期" prop="ac_items_bid_time">
-                  <el-input v-model="items_info.ac_items_bid_time"></el-input>
-                </el-form-item>
-                <el-form-item label="申办人" prop="ac_items_applicant">
-                  <el-input
-                    v-model="items_info.ac_items_applicant"
-                    disabled
-                  ></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="8">
-                <el-form-item label="结束日期" prop="ac_items_end_time">
-                  <div class="block">
-                    <el-date-picker
-                      v-model="items_info.ac_items_end_time"
-                      type="date"
-                      placeholder="选择日期"
-                      format="yyyy/MM/dd "
-                      value-format="yyyy/MM/dd"
-                    >
-                    </el-date-picker>
-                  </div>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-form-item style="text-align: center; margin-top: 20px">
-              <el-button type="primary" @click="submitForm('items_info')"
-                >提交</el-button
-              >
-              <el-button @click="resetForm('items_info')">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-dialog>
       </div>
 
       <div class="block">
@@ -239,8 +158,7 @@
 // import { mapGetters } from 'vuex'
 import { getLocal } from "@/utils/handleCache";
 import { notice } from "@/utils/message";
-import { addItem, getItemList, getActivityNum } from "@/api/unit";
-import { getResidentsNum } from "@/api/residents";
+import { addItem, getItemList, getHtActivity } from "@/api/unit";
 import { getInform } from "@/api/inform";
 
 export default {
@@ -270,7 +188,7 @@ export default {
       tableData: [],
       logo: "",
       site: [],
-      items_info: {
+      itemsInfo: {
         activity_items_id: "",
         ac_items_name: "",
         ac_items_holder_guid: "",
@@ -286,7 +204,6 @@ export default {
       },
     };
   },
-  created() {},
   methods: {
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -311,24 +228,18 @@ export default {
       this.$router.push({ path: pathName });
     },
 
-    createUnit() {
-      this.dialogFormVisible = true;
-      var _self = this;
-      setTimeout(function () {
-        _self.resetForm("items_info");
-      }, 100);
-    },
-
     getUnitList() {
       let param = {
         pageNum: this.page.pageNum,
         pageSize: this.page.pageSize,
         guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
       };
-      getItemList(param)
+
+      getHtActivity(param)
         .then((res) => {
           this.tableData = res.data;
-          this.page.total = res.total;
+          this.page.total = res.total || 0;
+          this.indicators.active = res.total || "暂无";
         })
         .catch((err) => {
           notice("error", "数据加载出错");
@@ -336,84 +247,25 @@ export default {
     },
 
     //表单操作
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          // 新增项目
-          addItem(this.items_info)
-            .then((res) => {
-              if (res.code == 200) {
-                notice("success", res.message);
-                this.dialogFormVisible = false;
-              } else {
-                notice("warning", res.message);
-                this.dialogFormVisible = false;
-              }
-              this.getUnitList();
-            })
-            .catch((err) => {
-              this.dialogFormVisible = false;
-              // console.log(err)
-              notice("error", "服务器错误！");
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
-      var _self = this;
-      setTimeout(() => {
-        let date = new Date();
-        _self.items_info.ac_items_holder_guid = JSON.parse(
-          JSON.parse(getLocal("unitInfo"))
-        ).guid;
-        _self.items_info.ac_items_applicant =
-          JSON.parse(JSON.parse(getLocal("userInfo"))).cm_manager_name ||
-          JSON.parse(JSON.parse(getLocal("unitInfo"))).guid;
-        _self.items_info.ac_items_bid_time = `${date.getFullYear()}/${
-          date.getMonth() + 1
-        }/${date.getDate()}`;
-      }, 100);
-    },
-
     setInfo() {
       let info = JSON.parse(JSON.parse(getLocal("unitInfo")));
       this.unitInfo.guid = info.guid;
-      this.unitInfo.name = info.cm_name;
-      this.unitInfo.phone = info.cm_phone;
-      this.unitInfo.location = info.cm_address;
-      this.unitInfo.introduce = info.cm_introduce;
-      this.logo = info.cm_logo;
-      if (info.cm_image) {
-        let imgList = JSON.parse(info.cm_image);
-        imgList.forEach((item) => {
-          this.site.push({ src: item });
-        });
+      this.unitInfo.name = info.ht_name;
+      this.unitInfo.phone = info.ht_phone;
+      this.unitInfo.location = info.ht_address;
+      this.unitInfo.introduce = info.ht_introduce;
+      this.logo = info.ht_logo;
+      if (info.ht_image) {
+        let imgList = JSON.parse(info.ht_image) || "";
+        if (imgList != "") {
+          imgList.forEach((item) => {
+            this.site.push({ src: item });
+          });
+        }
       }
     },
 
     getIndicators() {
-      getResidentsNum({
-        guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
-      }).then((res) => {
-        this.indicators.residents = res.data.num;
-      });
-
-      getInform({
-        guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
-      }).then((res) => {
-        this.indicators.message = res.data.num;
-      });
-
-      getActivityNum({
-        guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
-      }).then((res) => {
-        this.indicators.active = res.data.num;
-      });
-
       getInform({
         guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
         role: JSON.parse(getLocal("role")),
@@ -421,7 +273,7 @@ export default {
       }).then((res) => {
         this.indicators.message = res.data.length;
       });
-    },
+    }
   },
   created() {
     this.setInfo();

@@ -14,28 +14,13 @@ export default [
     path: '/',
     component: Layout,
     redirect: '/login',
-    meta: {  belong: "all" },
+    meta: {  belong: "cm" },
     children: [{
       path: 'unit',
       name: 'Unit',
       component: () => import('@/views/unit/index'),
       meta: { title: '个体信息', icon: 'el-icon-user-solid'}
     }]
-  },
-  {
-    path: '/personal',
-    component: Layout,
-    hidden: true,
-    meta: { belong: "all" },
-    children: [
-      {
-        path: 'set',
-        name: 'Set',
-        component: () => import('@/views/unit/unit_details'),
-        meta: { title: '个人信息修改', icon: 'el-icon-user-solid'}
-      }
-      
-    ]
   },
   {
     path: '/test',
@@ -49,7 +34,6 @@ export default [
         component: () => import('@/views/test'),
         meta: { title: 'test', icon: 'el-icon-user-solid'}
       }
-      
     ]
   },
   // 引入角色的路由

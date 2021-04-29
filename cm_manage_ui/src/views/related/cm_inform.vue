@@ -73,11 +73,15 @@
 </template>
 
 <script>
+import {getInform, updateInform, getInformList} from '@/api/inform'
+import { getLocal } from "@/utils/handleCache";
+import { notice } from "@/utils/message";
+
 export default {
   name: "Fund",
   data() {
     return {
-      viewState: "已发布",
+      viewState: "未查阅",
       informList: [
         {
           inform_id: "123",
@@ -136,14 +140,52 @@ export default {
       ],
     };
   },
+
+  created(){
+    this.getMessage('0')
+  },
   methods: {
     handleCommand(command) {
       this.viewState = command;
+      if(command == '已查阅'){
+        this.getMessage('1')
+      }else{
+        this.getMessage('0')
+      }
+    },
+
+    getMessage(state){
+      getInform({
+        guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
+        role: JSON.parse(getLocal("role")),
+        state: state
+        }).then(res => {
+        this.informList = res.data;
+      })
+    },
+
+    getAllMessageNum(){
+      getInformList({
+        guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
+        role: JSON.parse(getLocal("role")),
+      }).then(res => {
+        this.allMessageNum = res.data.length;
+      })
     },
 
     //切换阅读状态
     confirmState(index){
         this.informList[index].inform_state = this.informList[index].inform_state == '0' ? '1':'0';
+        updateInform({
+          inform_id: this.informList[index].inform_id,
+          inform_state: this.informList[index].inform_state
+        }).then(res => {
+          if(this.informList[index].inform_state == '0'){
+            notice('sucess',`${this.informList[index].inform_id}状态切换为已读！`)
+          }else{
+            notice('sucess',`${this.informList[index].inform_id}状态切换为未读！`)
+          }
+        })
     }
   },
 };

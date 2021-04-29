@@ -25,10 +25,6 @@
     </el-card>
 
     <div class="separator" style="height: 30px"></div>
-
-    <el-button type="text" style="font-size: 16px" @click="createUnit()"
-      >新增承办方</el-button
-    >
     <el-dialog title="管理员信息" :visible.sync="dialogFormVisible">
       <el-form
         :model="unitForm"
