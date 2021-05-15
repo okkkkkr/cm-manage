@@ -171,36 +171,45 @@
         </div>
       </div>
       <div class="block">
-        <el-table :data="tableData" style="width: 100%; max-height: 80vh">
+        <el-table :data="tableData" style="width: 100%; max-height: 80vh" border>
           <el-table-column prop="cm_residents_id" label="Uuid" width="300">
           </el-table-column>
-          <el-table-column prop="cm_residents_name" label="姓名" width="120">
+          <el-table-column prop="cm_residents_name" label="姓名">
           </el-table-column>
-          <el-table-column prop="cm_residents_age" label="年龄" width="120">
+          <el-table-column prop="cm_residents_age" label="年龄" >
           </el-table-column>
-          <el-table-column prop="cm_residents_sex" label="性别" width="120">
+          <el-table-column prop="cm_residents_sex" label="性别">
           </el-table-column>
-          <el-table-column prop="cm_residents_place" label="籍贯" width="120">
+          <el-table-column prop="cm_residents_place" label="籍贯">
           </el-table-column>
-          <el-table-column prop="cm_residents_identity" label="身份" width="80">
+          <el-table-column prop="cm_residents_identity" label="身份">
           </el-table-column>
           <el-table-column
             prop="cm_residents_phone"
             label="联系方式"
-            width="140"
           >
           </el-table-column>
           <el-table-column
             prop="cm_residents_paticipate"
             label="参与活动次数"
-            width="130"
           >
           </el-table-column>
           <el-table-column
             prop="cm_residents_address"
             label="居住地址"
-            width="500"
+            width="300"
           >
+          </el-table-column>
+          <el-table-column
+            prop="cm_residents_address"
+            label="居住状态"
+            width="80"
+          >
+          <template slot-scope="scope">
+            <el-tag
+              :type="scope.row.cm_residents_state === '1' ? 'success' : 'danger'"
+              disable-transitions>{{scope.row.cm_residents_state == '1' ? '居住中':'已搬离'}}</el-tag>
+          </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="100">
             <template slot-scope="scope">
@@ -275,21 +284,21 @@ export default {
       dialogFormVisible: false,
       sex: [
         {
-          value: "男",
+          value: "1",
           label: "男",
         },
         {
-          value: "女",
+          value: "0",
           label: "女",
         },
       ],
       identity: [
         {
-          value: "学生",
+          value: "0",
           label: "学生",
         },
         {
-          value: "社会工作者",
+          value: "1",
           label: "社会工作者",
         },
       ],
@@ -303,6 +312,7 @@ export default {
         cm_residents_identity: "",
         cm_residents_address: "",
         cm_residents_paticipate: "",
+        cm_residents_state:"1",
         cm_guid: "",
       },
       residentsForm: {
@@ -315,6 +325,7 @@ export default {
         cm_residents_identity: "",
         cm_residents_address: "",
         cm_residents_paticipate: "",
+        cm_residents_state:"1",
         cm_guid: "",
       },
       rules: {

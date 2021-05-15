@@ -105,7 +105,7 @@ exports.modifyManager = async(req, res) => {
     if(req.body.role == 'cm'){
         managerData = {
             _id: req.body._id,
-            cm_manager_name: req.body.manager_name,
+            manager_name: req.body.manager_name,
             cm_manager_age: req.body.manager_age,
             cm_manager_sex: req.body.manager_sex,
             cm_manager_place: req.body.manager_place,
@@ -117,7 +117,7 @@ exports.modifyManager = async(req, res) => {
     }else{
         managerData = {
             _id: req.body._id,
-            ht_manager_name: req.body.manager_name,
+            manager_name: req.body.manager_name,
             ht_manager_age: req.body.manager_age,
             ht_manager_sex: req.body.manager_sex,
             ht_manager_place: req.body.manager_place,

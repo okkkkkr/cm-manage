@@ -25,6 +25,7 @@ export const cmRoute = [
       {
         path: 'host',
         name: 'host',
+        hidden: true,
         component: () => import('@/views/related/host_info'),
         meta: { title: '承办方信息', icon: 'el-icon-s-custom'}
       },
@@ -44,19 +45,26 @@ export const cmRoute = [
         path: 'publish',
         name: 'publish',
         component: () => import('@/views/related/publish_info'),
-        meta: { title: '活动信息', icon: 'el-icon-s-ticket'}
+        meta: { title: '项目信息', icon: 'el-icon-s-ticket'}
+      },
+      {
+        path: 'itemInfo',
+        name: 'CMItemInfo',
+        hidden: true,
+        component: () => import('@/views/related/item_details'),
+        meta: { title: '项目详情', icon: 'el-icon-s-ticket'}
       },
       {
         path: 'activityInfo',
-        name: 'ActivityInfo',
-        // hidden: true,
+        name: 'CMActivityInfo',
+        hidden: true,
         component: () => import('@/views/related/activity_info'),
         meta: { title: '活动详情', icon: 'el-icon-s-ticket'}
       },
       {
         path: 'hostDetails',
         name: 'HostDetails',
-        // hidden: true,
+        hidden: true,
         component: () => import('@/views/related/host_details'),
         meta: { title: '承办方详情', icon: 'el-icon-s-ticket'}
       }
@@ -92,12 +100,14 @@ export const cmRoute = [
       {
         path: 'activity',
         name: 'Activity',
+        hidden: true,
         component: () => import('@/views/process/activity'),
-        meta: { title: '活动流程', icon: 'el-icon-s-claim' }
+        meta: { title: '活动流程监控', icon: 'el-icon-s-claim' }
       },
       {
         path: '/activity/details',
         name: 'ACDetails',
+        hidden: true,
         component: () => import('@/views/process/process_details'),
         meta: { title: '活动流程详情', icon: 'el-icon-s-order' }
       },
@@ -105,7 +115,7 @@ export const cmRoute = [
         path: 'order',
         name: 'Order',
         component: () => import('@/views/process/order'),
-        meta: { title: '活动申办工单', icon: 'el-icon-s-order' }
+        meta: { title: '项目委托工单', icon: 'el-icon-s-order' }
       },
       {
         path: '/order/details',
@@ -120,6 +130,7 @@ export const cmRoute = [
   {
     path: '/cm-data',
     component: Layout,
+    hidden: true,
     meta: { belong: 'cm' },
     children: [
       {
@@ -129,6 +140,23 @@ export const cmRoute = [
         meta: { title: '数据监管', icon: 'el-icon-s-platform', belong: 'cm' }
       }
     ]
+  },
+
+  {
+    path: '/sign-up',
+    name: 'signUp',
+    meta: { belong: 'all' },
+    component: () => import('@/views/test.vue'),
+    meta: { title: '模拟普通用户', icon: 'el-icon-s-order' }
+  },
+
+  {
+    path: '/activityDetails',
+    name: 'ActivityDetails',
+    meta: { belong: 'all' },
+    // hidden: true,
+    component: () => import('@/views/test_details'),
+    meta: { title: '活动详情', icon: 'el-icon-s-ticket'}
   },
 ]
 

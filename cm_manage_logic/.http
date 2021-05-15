@@ -57,3 +57,13 @@ POST {{uri}}/api/order/getFOrderList
     "role":"cm"
 }
 
+
+###
+#获取活动各项详情信息
+POST {{uri}}/api/activity/getDetailByGuid
+{{json}}
+
+{
+    "guid":"be026aa0-a74a-11eb-93ed-41bb43cfc402"
+}
+

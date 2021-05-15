@@ -21,7 +21,8 @@ var residents = require('./routes/residents/residents')
 var activity = require('./routes/activity/activity')
 var inform = require('./routes/inform/inform')
 var order = require('./routes/order/order')
-// var test = require('./routes/test/test');
+var test = require('./routes/test/test');
+var search = require('./routes/search/search')
 
 var app = express();
 
@@ -47,12 +48,13 @@ app.use('/', indexRouter);
 app.use('/api/users', users);
 app.use('/api/sign', login);
 app.use('/api/upload', upload);
-app.use('/api/manager', manager)
-app.use('/api/residents', residents)
-app.use('/api/activity', activity)
-app.use('/api/inform', inform)
-app.use('/api/order', order)
-// app.use('/api/test', test);
+app.use('/api/manager', manager);
+app.use('/api/residents', residents);
+app.use('/api/activity', activity);
+app.use('/api/inform', inform);
+app.use('/api/order', order);
+app.use('/api/test', test);
+app.use('/api/search', search)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

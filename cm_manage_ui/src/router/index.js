@@ -40,7 +40,7 @@ export default [
   ...cm_doute,
   ...ht_doute,
   ...adRoute,
-  
+
   {
     path: '/404',
     component: () => import('@/views/404'),

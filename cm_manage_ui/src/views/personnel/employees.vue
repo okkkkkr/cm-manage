@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="block">
-        <el-table :data="tableData" style="width: 100%" height="300">
+        <el-table :data="tableData" style="width: 100%" height="300" border>
           <el-table-column type="expand">
             <template slot-scope="props">
               <el-form label-position="left" class="demo-table-expand">

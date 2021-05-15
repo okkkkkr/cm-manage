@@ -60,7 +60,7 @@
             <i :style="{color: item.inform_state == 0 ? '#409EFF':'#67C23A'}" slot="reference" class="el-icon-message-solid switch-state"></i>
             </el-popconfirm>
           </div>
-          <div class="inform-content">
+          <div class="inform-content" style="cursor: pointer;" @click="informJump()">
             <p>发送人：<span style="font-weight: bold;">{{ item.inform_person }}</span></p>
             <p>通知方：<span style="font-weight: bold;">{{ item.inform_sender }}</span></p>
             <p>通知内容：<span style="font-weight: bold;">{{ item.inform_content }}</span></p>
@@ -186,6 +186,10 @@ export default {
             notice('sucess',`${this.informList[index].inform_id}状态切换为未读！`)
           }
         })
+    },
+
+    informJump(){
+      this.$router.push({path: '/process/order'})
     }
   },
 };

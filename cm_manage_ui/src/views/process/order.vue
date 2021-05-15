@@ -4,10 +4,21 @@
       <span class="order-status">执行中</span>
       <span class="order-nums">{{ ongoingList.length }}</span>
       <div class="order-item" style="margin-left: 50px">
-        合作承办方: <span class="item-name" style="color: #409eff">全部</span>
-      </div>
-      <div class="order-item">
-        当前项目: <span class="item-name" style="color: #409eff">全部</span>
+        <el-select
+          style="width: 100%"
+          v-model="filterOnGuid"
+          filterable
+          placeholder="请选择承办方"
+          @change="filterOngoing"
+        >
+          <el-option
+            v-for="item in htList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </div>
     </div>
     <div class="ongoing" v-if="ongoingList.length != 0">
@@ -22,21 +33,16 @@
             <div class="block">
               <el-timeline>
                 <el-timeline-item
-                  timestamp="发起工单"
+                  timestamp="发起委托"
                   icon="el-icon-more"
                   type="primary"
                   placement="top"
                 >
                   <el-card>
-                    <h4>创建并发起工单</h4>
+                    <h4>发起项目委托</h4>
                     <p>受理方：{{ item.ht_name }}</p>
                     <p>发起日期：{{ item.detail[0].order_submit_time }}</p>
-                    <p v-if="item.detail[0].order_file">
-                      相关文件：{{ item.detail[0].order_file }}
-                    </p>
-                    <p v-if="item.detail[0].order_image">
-                      相关图片：{{ item.detail[0].order_image }}
-                    </p>
+                    <p v-if="item.detail[0].order_file"></p>
                     <p v-if="item.detail[0].order_describe">
                       工单描述：{{ item.detail[0].order_describe }}
                     </p>
@@ -84,12 +90,7 @@
                   <el-card v-if="item.detail[1]">
                     <h4>承办方一审</h4>
                     <p>提交日期：{{ item.detail[1].order_submit_time }}</p>
-                    <p v-if="item.detail[1].order_file">
-                      相关文件：{{ item.detail[1].order_file }}
-                    </p>
-                    <p v-if="item.detail[1].order_image">
-                      相关图片：{{ item.detail[1].order_image }}
-                    </p>
+                    <p v-if="item.detail[1].order_file"></p>
                     <p v-if="item.detail[1].order_describe">
                       工单描述：{{ item.detail[1].order_describe }}
                     </p>
@@ -131,12 +132,7 @@
                   <el-card v-if="item.detail[2]">
                     <h4>社区方二审</h4>
                     <p>提交日期：{{ item.detail[2].order_submit_time }}</p>
-                    <p v-if="item.detail[2].order_file">
-                      相关文件：{{ item.detail[2].order_file }}
-                    </p>
-                    <p v-if="item.detail[2].order_image">
-                      相关图片：{{ item.detail[2].order_image }}
-                    </p>
+                    <p v-if="item.detail[2].order_file"></p>
                     <p v-if="item.detail[2].order_describe">
                       工单描述：{{ item.detail[2].order_describe }}
                     </p>
@@ -151,12 +147,10 @@
                     </p>
                   </el-card>
                 </el-timeline-item>
-                <el-timeline-item timestamp="待承办方终审" placement="top">
-                </el-timeline-item>
               </el-timeline>
             </div>
             <div style="width: 100%; text-align: right">
-              <el-button @click="viewDetails('T',index)" type="primary" plain
+              <el-button @click="viewDetails('T', index)" type="primary" plain
                 >查看详情</el-button
               >
             </div>
@@ -167,14 +161,25 @@
 
     <div class="separator" style="height: 40px"></div>
 
-    <div class="order-info">
+    <div class="order-info clearfix">
       <span class="order-status">已结束</span>
       <span class="order-nums">{{ finishedList.length }}</span>
       <div class="order-item">
-        合作承办方: <span class="item-name" style="color: #409eff">全部</span>
-      </div>
-      <div class="order-item" style="margin-right: 50px">
-        当前项目: <span class="item-name" style="color: #409eff">全部</span>
+        <el-select
+          style="width: 100%"
+          v-model="filterOffGuid"
+          filterable
+          placeholder="请选择承办方"
+          @change="filterFinish"
+        >
+          <el-option
+            v-for="item in htList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </div>
       <div class="order-item" style="margin-right: 50px">
         工单状态:
@@ -200,6 +205,7 @@
         </el-dropdown>
       </div>
     </div>
+
     <div class="finished" v-if="finishedList.length != 0">
       <el-card
         class="box-card"
@@ -212,21 +218,16 @@
             <div class="block">
               <el-timeline>
                 <el-timeline-item
-                  timestamp="发起工单"
+                  timestamp="发起委托"
                   icon="el-icon-more"
                   type="primary"
                   placement="top"
                 >
                   <el-card>
-                    <h4>创建并发起工单</h4>
+                    <h4>发起项目委托</h4>
                     <p>受理方：{{ item.ht_name }}</p>
                     <p>发起日期：{{ item.detail[0].order_submit_time }}</p>
-                    <p v-if="item.detail[0].order_file">
-                      相关文件：{{ item.detail[0].order_file }}
-                    </p>
-                    <p v-if="item.detail[0].order_image">
-                      相关图片：{{ item.detail[0].order_image }}
-                    </p>
+                    <p v-if="item.detail[0].order_file"></p>
                     <p v-if="item.detail[0].order_describe">
                       工单描述：{{ item.detail[0].order_describe }}
                     </p>
@@ -274,12 +275,7 @@
                   <el-card v-if="item.detail[1]">
                     <h4>承办方一审</h4>
                     <p>提交日期：{{ item.detail[1].order_submit_time }}</p>
-                    <p v-if="item.detail[1].order_file">
-                      相关文件：{{ item.detail[1].order_file }}
-                    </p>
-                    <p v-if="item.detail[1].order_image">
-                      相关图片：{{ item.detail[1].order_image }}
-                    </p>
+                    <p v-if="item.detail[1].order_file"></p>
                     <p v-if="item.detail[1].order_describe">
                       工单描述：{{ item.detail[1].order_describe }}
                     </p>
@@ -321,12 +317,7 @@
                   <el-card v-if="item.detail[2]">
                     <h4>社区方二审</h4>
                     <p>提交日期：{{ item.detail[2].order_submit_time }}</p>
-                    <p v-if="item.detail[2].order_file">
-                      相关文件：{{ item.detail[2].order_file }}
-                    </p>
-                    <p v-if="item.detail[2].order_image">
-                      相关图片：{{ item.detail[2].order_image }}
-                    </p>
+                    <p v-if="item.detail[2].order_file"></p>
                     <p v-if="item.detail[2].order_describe">
                       工单描述：{{ item.detail[2].order_describe }}
                     </p>
@@ -343,70 +334,23 @@
                 </el-timeline-item>
                 <el-timeline-item
                   :timestamp="
-                    item.detail[3] == null
-                      ? '待承办方终审'
-                      : item.detail[3].order_state == 31
-                      ? '承办方终审通过'
-                      : '承办方终审未通过'
-                  "
-                  :icon="
-                    item.detail[3] == null
-                      ? ''
-                      : item.detail[3].order_state == 31
-                      ? 'el-icon-check'
-                      : 'el-icon-close'
-                  "
-                  :type="
-                    item.detail[3] == null
-                      ? ''
-                      : item.detail[3].order_state == 31
-                      ? 'success'
-                      : 'danger'
-                  "
-                  placement="top"
-                >
-                  <el-card v-if="item.detail[3]">
-                    <h4>承办方终审</h4>
-                    <p>提交日期：{{ item.detail[3].order_submit_time }}</p>
-                    <p v-if="item.detail[3].order_file">
-                      相关文件：{{ item.detail[3].order_file }}
-                    </p>
-                    <p v-if="item.detail[3].order_image">
-                      相关图片：{{ item.detail[3].order_image }}
-                    </p>
-                    <p v-if="item.detail[3].order_describe">
-                      工单描述：{{ item.detail[3].order_describe }}
-                    </p>
-                    <p>
-                      <span class="key-words">{{
-                        item.detail[2].order_handler_name
-                      }}</span>
-                      提交于
-                      <span class="key-words">{{
-                        item.detail[3].order_submit_time
-                      }}</span>
-                    </p>
-                  </el-card>
-                </el-timeline-item>
-                <el-timeline-item
-                  :timestamp="
-                    item.detail[3] == null
+                    item.detail[2] == null
                       ? '工单结束'
-                      : item.detail[3].order_state == 31
-                      ? '工单结束，活动项目已建立'
+                      : item.detail[2].order_state == 21
+                      ? '工单结束，活动项目已成立'
                       : '工单结束'
                   "
                   :icon="
-                    item.detail[3] == null
+                    item.detail[2] == null
                       ? ''
-                      : item.detail[3].order_state == 31
+                      : item.detail[2].order_state == 21
                       ? 'el-icon-more'
                       : ''
                   "
                   :type="
-                    item.detail[3] == null
+                    item.detail[2] == null
                       ? ''
-                      : item.detail[3].order_state == 31
+                      : item.detail[2].order_state == 21
                       ? 'primary'
                       : ''
                   "
@@ -416,7 +360,7 @@
               </el-timeline>
             </div>
             <div style="width: 100%; text-align: right">
-              <el-button @click="viewDetails('F',index)" type="primary" plain
+              <el-button @click="viewDetails('F', index)" type="primary" plain
                 >查看详情</el-button
               >
             </div>
@@ -430,39 +374,96 @@
 <script>
 import { getTOrderList, getFOrderList } from "@/api/order";
 import { getLocal } from "@/utils/handleCache";
+import { getHostList } from "@/api/user";
 import { notice } from "@/utils/message";
 
 export default {
-  name: "Warehouse",
   data() {
     return {
       orderState: "全部",
-      ongoingList: [],
-      finishedList: [],
+      ongoList: [],
+      finList: [],
+      allOngoing: [],
+      allFinish: [],
+      htList: [],
+      filterOnGuid: "",
+      filterOffGuid: "",
+      filterState: "",
     };
   },
 
-  components: {},
+  computed: {
+    ongoingList: function () {
+      return this.ongoList;
+    },
 
-  computed: {},
-
-  mounted() {
-    this.getList();
+    finishedList: function () {
+      return this.finList;
+    },
   },
+
   methods: {
     handleChange(val) {
       console.log(val);
     },
 
     handleCommand(command) {
+      let list = [];
+      let state = command == "接受" ? "2" : command == "拒绝" ? "0" : "1";
+      if (state != '1') {
+        this.allFinish.forEach((item, index) => {
+          console.log(state)
+          if (item.ac_order_state == state) {
+            list.push(item);
+          }
+          if (index == this.allFinish.length - 1) {
+            this.finList = list;
+          }
+        });
+      }else{
+        this.finList = this.allFinish;
+      }
+
       this.orderState = command;
     },
 
-    viewDetails(type,index){
-      if(type == 'T'){
-        this.$router.push({path:'/order/details', query:{info: this.ongoingList[index]}})
-      }else{
-        this.$router.push({path:'/order/details', query:{info: this.finishedList[index]}})
+    filterOngoing(value) {
+      let list = [];
+      this.allOngoing.forEach((item, index) => {
+        if (item.ac_order_ht_guid == value) {
+          list.push(item);
+        }
+        if (index == this.allOngoing.length - 1) {
+          this.finList = list;
+          console.log(this.ongoList);
+        }
+      });
+    },
+
+    filterFinish(value) {
+      let list = [];
+      this.allFinish.forEach((item, index) => {
+        if (item.ac_order_ht_guid == value) {
+          list.push(item);
+        }
+        if (index == this.allFinish.length - 1) {
+          this.finList = list;
+          console.log(this.finList);
+        }
+      });
+    },
+
+    viewDetails(type, index) {
+      if (type == "T") {
+        this.$router.push({
+          path: "/order/details",
+          query: { info: this.ongoingList[index] },
+        });
+      } else {
+        this.$router.push({
+          path: "/order/details",
+          query: { info: this.finishedList[index] },
+        });
       }
     },
 
@@ -471,16 +472,33 @@ export default {
         guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
         role: JSON.parse(getLocal("role")),
       }).then((res) => {
-        this.ongoingList = res.data;
+        this.ongoList = res.data;
+        this.allOngoing = res.data;
       });
 
       getFOrderList({
         guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
         role: JSON.parse(getLocal("role")),
       }).then((res) => {
-        this.finishedList = res.data;
+        this.finList = res.data;
+        this.allFinish = res.data;
+        console.log(this.finList);
       });
     },
+  },
+
+  mounted() {
+    this.getList();
+    getHostList("1", "10000")
+      .then((res) => {
+        let items = res.data;
+        items.forEach((item) => {
+          this.htList.push({ label: item.ht_name, value: item.guid });
+        });
+      })
+      .catch((err) => {
+        notice("error", "服务器出错！");
+      });
   },
 };
 </script>

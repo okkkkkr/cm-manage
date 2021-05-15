@@ -7,10 +7,3 @@ export function login(data){
         data
     })
 }
-
-// export function open(){
-//     return request({
-//         url: '/api/test/files',
-//         method:'get'
-//     })
-// }

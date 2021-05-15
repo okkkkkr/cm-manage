@@ -31,10 +31,12 @@
           <p class="unit-basic">
             <i class="el-icon-phone"></i>
             {{ unitInfo.phone }}
+            <i style="margin-left: 20px" class="el-icon-location"></i>
+            {{ unitInfo.location }}
           </p>
           <p class="unit-basic">
-            <i class="el-icon-location"></i>
-            {{ unitInfo.location }}
+            <i class="el-icon-s-order"></i>
+            {{ unitInfo.introduce }}
           </p>
         </el-col>
       </el-row>
@@ -47,17 +49,7 @@
         <span>关键指标</span>
       </div>
       <el-row>
-        <el-col :span="6">
-          <div class="indicators">
-            <ul>
-              <li style="font-size: 12px">活动场次</li>
-              <li style="font-size: 24px; font-weight: bold">
-                {{ indicators.active }}
-              </li>
-            </ul>
-          </div>
-        </el-col>
-        <el-col :span="6">
+        <el-col :span="8">
           <div class="indicators">
             <ul>
               <li style="font-size: 12px">活动项目</li>
@@ -67,8 +59,8 @@
             </ul>
           </div>
         </el-col>
-        <el-col :span="6">
-          <div class="indicators">
+        <el-col :span="8">
+          <div class="indicators" style="cursor: pointer;" @click="routerPush('/cm-residents/index')">
             <ul>
               <li style="font-size: 12px">社区居民</li>
               <li style="font-size: 24px; font-weight: bold">
@@ -77,8 +69,8 @@
             </ul>
           </div>
         </el-col>
-        <el-col :span="6">
-          <div  class="indicators" style="cursor: pointer;" @click="routerPush('/ht-related/inform')">
+        <el-col :span="8">
+          <div  class="indicators" style="cursor: pointer;" @click="routerPush('/cm-related/inform')">
             <ul>
               <li style="font-size: 12px">新的消息</li>
               <li style="font-size: 24px; font-weight: bold">
@@ -118,7 +110,7 @@
           "
         >
           <span>我的项目</span>
-          <el-button type="text" style="font-size: 16px" @click="createUnit()"
+          <el-button type="text" style="font-size: 16px" @click="routerPush('/cm-related/publish')"
             >新增项目</el-button
           >
         </div>
@@ -184,53 +176,82 @@
         </el-dialog>
       </div>
 
-      <div class="block">
-        <el-table :data="tableData" style="width: 100%; max-height: 500px">
-          <el-table-column prop="activity_items_id" label="项目ID" width="300">
-          </el-table-column>
-          <el-table-column prop="ac_items_name" label="项目名称" width="300">
-          </el-table-column>
-          <el-table-column
-            prop="ac_items_applicant"
-            label="项目申办人"
-            width="150"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="ac_items_bid_time"
-            label="项目申办日期"
-            width="150"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="ac_items_end_time"
-            label="项目结束日期"
-            width="150"
-          >
-          </el-table-column>
-          <el-table-column label="操作" width="100">
-            <template slot-scope="scope">
-              <el-button
-                @click="handleClick(scope.row)"
-                type="text"
-                size="small"
-                >查看详情</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          style="margin-top: 20px"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="page.pageNum"
-          :page-sizes="[5, 10, 15, 20]"
-          :page-size="page.pageSize"
-          layout="total, sizes, prev, pager, next"
-          :total="page.total"
+      <div class="block" style="margin-top: 10px;">
+      <el-table :data="tableData" style="width: 100%; max-height: 500px" border>
+        <el-table-column prop="activity_items_id" label="项目ID" width="300">
+        </el-table-column>
+        <el-table-column prop="ac_items_name" label="项目名称" width="300">
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_applicant"
+          label="项目申办人"
+          width="150"
         >
-        </el-pagination>
-      </div>
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_bid_time"
+          label="项目申办日期"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_end_time"
+          label="项目结束日期"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_money"
+          label="项目投入资金（元）"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column prop="ac_items_state" label="当前状态" width="150">
+          <template slot-scope="scope">
+            <div slot="reference" class="name-wrapper">
+              <el-tag
+                size="medium"
+                :type="
+                  scope.row.ac_items_state == '0'
+                    ? 'danger'
+                    : scope.row.ac_items_state == '2'
+                    ? 'success'
+                    : 'warning'
+                "
+                >{{
+                  scope.row.ac_items_state == "1"
+                    ? "审核中"
+                    : scope.row.ac_items_state == "0"
+                    ? "已拒绝"
+                    : "已通过"
+                }}</el-tag
+              >
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="150" fixed="right">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="success" size="small"
+              >详情</el-button
+            >
+            <el-button @click="routerPush('/cm-data/index')" type="primary" size="small"
+              >数据</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        style="margin-top: 20px"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="page.pageNum"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="page.pageSize"
+        layout="total, sizes, prev, pager, next"
+        :total="page.total"
+      >
+      </el-pagination>
+    </div>
     </el-card>
   </div>
 </template>
@@ -248,6 +269,7 @@ export default {
   computed: {},
   data() {
     return {
+      role: JSON.parse(getLocal('role')),
       name: "首页",
       dialogFormVisible: false,
       indicators: {
@@ -286,7 +308,7 @@ export default {
       },
     };
   },
-  created() {},
+  
   methods: {
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -303,7 +325,7 @@ export default {
         ...row,
         total: this.indicators.active,
       };
-      this.$router.push({ path: "/cm-related/publish", query: itemData });
+      this.$router.push({ name: "CMItemInfo", params: itemData });
     },
 
     // 路由跳转
@@ -311,19 +333,14 @@ export default {
       this.$router.push({ path: pathName });
     },
 
-    createUnit() {
-      this.dialogFormVisible = true;
-      var _self = this;
-      setTimeout(function () {
-        _self.resetForm("items_info");
-      }, 100);
-    },
+    createUnit() {},
 
     getUnitList() {
       let param = {
         pageNum: this.page.pageNum,
         pageSize: this.page.pageSize,
         guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
+        role: this.role
       };
       getItemList(param)
         .then((res) => {
@@ -371,7 +388,7 @@ export default {
           JSON.parse(getLocal("unitInfo"))
         ).guid;
         _self.items_info.ac_items_applicant =
-          JSON.parse(JSON.parse(getLocal("userInfo"))).cm_manager_name ||
+          JSON.parse(JSON.parse(getLocal("userInfo"))).manager_name ||
           JSON.parse(JSON.parse(getLocal("unitInfo"))).guid;
         _self.items_info.ac_items_bid_time = `${date.getFullYear()}/${
           date.getMonth() + 1
@@ -410,6 +427,7 @@ export default {
 
       getActivityNum({
         guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
+        role: JSON.parse(getLocal("role"))
       }).then((res) => {
         this.indicators.active = res.data.num;
       });

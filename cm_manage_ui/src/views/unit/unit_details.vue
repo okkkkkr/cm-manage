@@ -109,7 +109,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getLocal, setLocal } from "../../utils/handleCache";
-import { delFiles } from "@/api/files";
+import { delImage } from "@/api/files";
 import { modifyInfo } from "@/api/user";
 import { notice } from "../../utils/message";
 
@@ -153,7 +153,7 @@ export default {
 
   methods: {
     handleRemove(file, fileList) {
-      delFiles({
+      delImage({
         fileName: file.name,
         _id: this.attachedInd._id,
       })
@@ -210,7 +210,6 @@ export default {
 
     submitForm() {
       this.unitInfo.role = "cm";
-      console.log(unitInfo)
       modifyInfo(this.unitInfo)
         .then((res) => {
           notice("success", res.message);

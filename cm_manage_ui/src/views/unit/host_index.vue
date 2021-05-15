@@ -52,9 +52,9 @@
         <el-col :span="12">
           <div class="indicators">
             <ul>
-              <li style="font-size: 12px">活动场次</li>
+              <li style="font-size: 12px">项目委托(含拒绝)</li>
               <li style="font-size: 24px; font-weight: bold">
-                {{ indicators.active }}
+                {{ page.total }}
               </li>
             </ul>
           </div>
@@ -103,53 +103,82 @@
         </div>
       </div>
 
-      <div class="block">
-        <el-table :data="tableData" style="width: 100%; max-height: 500px">
-          <el-table-column prop="activity_items_id" label="项目ID" width="300">
-          </el-table-column>
-          <el-table-column prop="ac_items_name" label="项目名称" width="300">
-          </el-table-column>
-          <el-table-column
-            prop="ac_items_applicant"
-            label="项目申办人"
-            width="150"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="ac_items_bid_time"
-            label="项目申办日期"
-            width="150"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="ac_items_end_time"
-            label="项目结束日期"
-            width="150"
-          >
-          </el-table-column>
-          <el-table-column label="操作" width="100">
-            <template slot-scope="scope">
-              <el-button
-                @click="handleClick(scope.row)"
-                type="text"
-                size="small"
-                >查看详情</el-button
-              >
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination
-          style="margin-top: 20px"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="page.pageNum"
-          :page-sizes="[5, 10, 15, 20]"
-          :page-size="page.pageSize"
-          layout="total, sizes, prev, pager, next"
-          :total="page.total"
+     <div class="block" style="margin-top: 10px;">
+      <el-table :data="tableData" style="width: 100%; max-height: 500px" border>
+        <el-table-column prop="activity_items_id" label="项目ID" width="300">
+        </el-table-column>
+        <el-table-column prop="ac_items_name" label="项目名称" width="300">
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_applicant"
+          label="项目申办人"
+          width="150"
         >
-        </el-pagination>
-      </div>
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_bid_time"
+          label="项目申办日期"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_end_time"
+          label="项目结束日期"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_items_money"
+          label="项目投入资金（元）"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column prop="ac_items_state" label="当前状态" width="150">
+          <template slot-scope="scope">
+            <div slot="reference" class="name-wrapper">
+              <el-tag
+                size="medium"
+                :type="
+                  scope.row.ac_items_state == '0'
+                    ? 'danger'
+                    : scope.row.ac_items_state == '2'
+                    ? 'success'
+                    : 'warning'
+                "
+                >{{
+                  scope.row.ac_items_state == "1"
+                    ? "审核中"
+                    : scope.row.ac_items_state == "0"
+                    ? "已拒绝"
+                    : "已通过"
+                }}</el-tag
+              >
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="150" fixed="right">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="success" size="small"
+              >详情</el-button
+            >
+            <el-button @click="routerPush('/cm-data/index')" type="primary" size="small"
+              >数据</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        style="margin-top: 20px"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="page.pageNum"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="page.pageSize"
+        layout="total, sizes, prev, pager, next"
+        :total="page.total"
+      >
+      </el-pagination>
+    </div>
     </el-card>
   </div>
 </template>
@@ -158,7 +187,7 @@
 // import { mapGetters } from 'vuex'
 import { getLocal } from "@/utils/handleCache";
 import { notice } from "@/utils/message";
-import { addItem, getItemList, getHtActivity } from "@/api/unit";
+import { addItem, getItemList, getHTActivity } from "@/api/unit";
 import { getInform } from "@/api/inform";
 
 export default {
@@ -166,24 +195,25 @@ export default {
   computed: {},
   data() {
     return {
+      role: JSON.parse(getLocal('role')),
       name: "首页",
       dialogFormVisible: false,
       indicators: {
         residents: "",
         active: "",
-        message: "",
+        message: ""
       },
       page: {
         pageSize: 5,
         pageNum: 1,
-        total: 0,
+        total: 0
       },
       unitInfo: {
         guid: "",
         name: "",
         location: "",
         phone: "",
-        introduce: "",
+        introduce: ""
       },
       tableData: [],
       logo: "",
@@ -194,7 +224,7 @@ export default {
         ac_items_holder_guid: "",
         ac_items_bid_time: "",
         ac_items_end_time: "",
-        ac_items_applicant: "",
+        ac_items_applicant: ""
       },
       rules: {
         ac_items_name: [{ required: true, trigger: "blur" }],
@@ -209,6 +239,7 @@ export default {
       this.page.pageSize = val;
       this.getUnitList();
     },
+
     handleCurrentChange(val) {
       this.page.pageNum = val;
       this.getUnitList();
@@ -218,9 +249,8 @@ export default {
     handleClick(row) {
       let itemData = {
         ...row,
-        total: this.indicators.active,
       };
-      this.$router.push({ path: "/cm-related/publish", query: itemData });
+      this.$router.push({ name: "ItemInfo", params: itemData });
     },
 
     // 路由跳转
@@ -228,18 +258,17 @@ export default {
       this.$router.push({ path: pathName });
     },
 
-    getUnitList() {
+     getUnitList() {
       let param = {
         pageNum: this.page.pageNum,
         pageSize: this.page.pageSize,
         guid: JSON.parse(JSON.parse(getLocal("unitInfo"))).guid,
+        role: this.role
       };
-
-      getHtActivity(param)
+      getItemList(param)
         .then((res) => {
           this.tableData = res.data;
-          this.page.total = res.total || 0;
-          this.indicators.active = res.total || "暂无";
+          this.page.total = res.total;
         })
         .catch((err) => {
           notice("error", "数据加载出错");

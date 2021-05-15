@@ -79,7 +79,6 @@
             ref="upload"
             class="upload-demo"
             :action="baseAction + '/api/upload/image'"
-            :on-preview="handlePreview"
             :on-remove="handleRemove"
             :file-list="fileList"
             list-type="picture"
@@ -109,7 +108,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getLocal, setLocal } from "../../utils/handleCache";
-import { delFiles } from "@/api/files";
+import { delImage } from "@/api/files";
 import { modifyInfo } from "@/api/user";
 import { notice } from "../../utils/message";
 
@@ -125,6 +124,17 @@ export default {
         introduce: "",
         role: "",
       },
+      fileList:[],
+      rules: {
+        cm_guid: [{ required: true, trigger: "blur" }],
+        ht_guid: [{ required: true, trigger: "blur" }],
+        ac_type: [{ required: true, trigger: "blur" }],
+        ac_fund: [{ required: true, trigger: "blur" }],
+        item_name: [{ required: true, trigger: "blur" }],
+        begin_time: [{ required: true, trigger: "blur" }],
+        end_time: [{ required: true, trigger: "blur" }],
+        handler_id: [{ required: true, trigger: "blur" }],
+      },
       attachedLogo: {
         _id: JSON.parse(JSON.parse(getLocal("unitInfo"))).ht_account,
         type: "logo",
@@ -136,7 +146,6 @@ export default {
         role: "ht",
       },
       logo: "",
-      fileList: [],
     };
   },
 
@@ -153,7 +162,7 @@ export default {
 
   methods: {
     handleRemove(file, fileList) {
-      delFiles({
+      delImage({
         fileName: file.name,
         _id: this.attachedInd._id,
       })
@@ -169,10 +178,6 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
-    },
-
-    handlePreview(file) {
-      console.log(file);
     },
 
     handleAvatarSuccess(res, file) {

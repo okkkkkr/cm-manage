@@ -38,6 +38,7 @@ export const ht_route = [
       {
         path: 'community',
         name: 'Community',
+        hidden: true,
         component: () => import('@/views/related/host_info'),
         meta: { title: '社区方信息', icon: 'el-icon-user-solid'}
       },
@@ -54,34 +55,48 @@ export const ht_route = [
         meta: { title: '我的消息', icon: 'el-icon-user-solid'},
       },
       {
+        path: 'itemInfo',
+        name: 'ItemInfo',
+        hidden: true,
+        component: () => import('@/views/related/item_details'),
+        meta: { title: '项目详情', icon: 'el-icon-s-ticket'}
+      },
+      {
         path: 'activityInfo',
         name: 'ActivityInfo',
-        // hidden: true,
+        hidden: true,
         component: () => import('@/views/related/activity_info'),
         meta: { title: '活动详情', icon: 'el-icon-s-ticket'}
       },
       {
+        path: 'setActivityInfo',
+        name: 'setActivityInfo',
+        hidden: true,
+        component: () => import('@/views/related/set_ac_details'),
+        meta: { title: '新增活动', icon: 'el-icon-s-ticket'}
+      },
+      {
         path: 'cmDetails',
         name: 'CmDetails',
-        // hidden: true,
+        hidden: true,
         component: () => import('@/views/related/host_details'),
         meta: { title: '社区方详情', icon: 'el-icon-s-ticket'}
       }
     ]
   },
-  {
-    path: '/personnel',
-    component: Layout,
-    meta: { belong: 'ht' },
-    children: [
-      {
-        path: 'employees',
-        name: 'Employees',
-        component: () => import('@/views/personnel/employees'),
-        meta: { title: '职员信息', icon: 'el-icon-info'}
-      },
-    ]
-  },
+  // {
+  //   path: '/personnel',
+  //   component: Layout,
+  //   meta: { belong: 'ht' },
+  //   children: [
+  //     {
+  //       path: 'employees',
+  //       name: 'Employees',
+  //       component: () => import('@/views/personnel/employees'),
+  //       meta: { title: '职员信息', icon: 'el-icon-info'}
+  //     },
+  //   ]
+  // },
   {
     path: '/process',
     component: Layout,
@@ -90,20 +105,22 @@ export const ht_route = [
       {
         path: 'activity',
         name: 'Activity',
+        hidden: true,
         component: () => import('@/views/process/activity'),
-        meta: { title: '活动流程', icon: 'el-icon-s-claim' }
-      },
-      {
-        path: 'details',
-        name: 'Details',
-        component: () => import('@/views/process/process_details'),
-        meta: { title: '活动流程详情', icon: 'el-icon-s-order'}
+        meta: { title: '活动流程监控', icon: 'el-icon-s-claim' }
       },
       {
         path: 'order',
         name: 'Order',
         component: () => import('@/views/process/order'),
-        meta: { title: '活动申办工单', icon: 'el-icon-s-order' }
+        meta: { title: '项目委托工单', icon: 'el-icon-s-order' }
+      },
+      {
+        path: 'details',
+        name: 'Details',
+        hidden: true,
+        component: () => import('@/views/process/process_details'),
+        meta: { title: '活动流程详情', icon: 'el-icon-s-order'}
       },
       {
         path: '/order/details',
@@ -118,6 +135,7 @@ export const ht_route = [
   {
     path: '/data',
     component: Layout,
+    hidden: true,
     meta: { belong: 'ht' },
     children: [
       {

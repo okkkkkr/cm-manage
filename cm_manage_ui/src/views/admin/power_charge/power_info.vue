@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <p>
         <i class="el-icon-info" style="font-size: 20px; color: #409eff"></i>
-        <span class="power-title">承办方权限</span>
+        <span class="power-title">权限监管</span>
       </p>
       <el-row :gutter="50">
         <el-col :span="4">
@@ -16,7 +16,7 @@
         </el-col>
         <el-col :span="4">
           <el-input
-            placeholder="所在地址检索"
+            placeholder="所在地检索"
             prefix-icon="el-icon-search"
             v-model="unitLocation"
           >
@@ -29,17 +29,34 @@
     <div class="separator" style="height: 20px"></div>
 
     <div class="another-cont">
-      <el-card class="box-card">
+      <el-card
+        style="margin-bottom: 20px"
+        v-for="unit in unitList"
+        :key="unit.guid"
+        class="box-card"
+      >
         <el-collapse accordion>
           <el-collapse-item>
             <template slot="title">
               <i class="el-icon-s-home another-icon"></i
-              ><span class="unit-info">北京理工大学珠海学院</span>
+              ><span class="unit-info">{{
+                role == "cm"
+                  ? unit.cm_name
+                  : role == "ht"
+                  ? unit.ht_name
+                  : unit.admin_name
+              }}</span>
               <i
                 style="margin-left: 50px"
                 class="el-icon-location another-icon"
               ></i
-              ><span class="unit-info">广东省珠海市香洲区金凤路10号</span>
+              ><span class="unit-info">{{
+                role == "cm"
+                  ? unit.cm_address
+                  : role == "ht"
+                  ? unit.ht_address
+                  : unit.admin_place
+              }}</span>
             </template>
             <el-row>
               <div class="power-item">
@@ -88,22 +105,28 @@
 </template>
 
 <script>
+import { getHostList, getCommunityList, getAdminList } from "@/api/user";
+import { getLocal } from "../../../utils/handleCache";
 export default {
   data() {
     return {
       unitName: "",
       unitLocation: "",
       currentPage: 1,
+      role: "",
+      unitName: "",
+      location: "",
       tableData: [],
       allPower: "1",
       powerString: "",
-      powerList: [
+      unitList: [],
+      cm_power: [
         {
-          title: "活动发布",
+          title: "项目委托发布",
           value: "1",
         },
         {
-          title: "活动申办",
+          title: "居民信息管理",
           value: "1",
         },
         {
@@ -118,6 +141,52 @@ export default {
           title: "个体信息监管",
           value: "1",
         },
+      ],
+      ht_power: [
+        {
+          title: "项目承接",
+          value: "1",
+        },
+        {
+          title: "活动举办",
+          value: "1",
+        },
+        {
+          title: "活动流程编辑",
+          value: "1",
+        },
+        {
+          title: "活动数据监控",
+          value: "1",
+        },
+        {
+          title: "个体信息监管",
+          value: "1",
+        },
+      ],
+      ad_power:[
+        {
+          title: "活动发布审核",
+          value: "1",
+        },
+        {
+          title: "个体信息监管",
+          value: "1",
+        },
+        {
+          title: "个体权限监管",
+          value: "1",
+        },
+        {
+          title: "活动流程监管",
+          value: "1",
+        },
+        {
+          title: "活动项目监管",
+          value: "1",
+        },
+      ],
+      powerList: [
       ],
     };
   },
@@ -139,12 +208,11 @@ export default {
       deep: true,
       immediate: false,
       handler() {
-        this.powerString = '';
+        this.powerString = "";
         for (let item of this.powerList) {
           this.powerString += item.value;
         }
-      }
-      
+      },
     },
 
     ownership: function (val) {
@@ -178,9 +246,34 @@ export default {
       console.log(row);
     },
   },
+
+  mounted() {
+    this.role =
+      this.$route.path == "/ad-charge/cm-power"
+        ? "cm"
+        : this.$route.path == "/ad-charge/ht-power"
+        ? "ht"
+        : "ad";
+    if (this.role == "cm") {
+      this.powerList = this.cm_power
+      getCommunityList("1", "100").then((res) => {
+        this.unitList = res.data;
+      });
+    } else if (this.role == "ht") {
+      this.powerList = this.ht_power
+      getHostList("1", "100").then((res) => {
+        this.unitList = res.data;
+      });
+    } else {
+      this.powerList = this.ad_power
+      getAdminList("1", "100").then((res) => {
+        this.unitList = res.data;
+      });
+    }
+  },
 };
 </script>
 
 <style lang="less" scoped>
-  @import '../../../styles/admin/power_info.less';
+@import "../../../styles/admin/power_info.less";
 </style>

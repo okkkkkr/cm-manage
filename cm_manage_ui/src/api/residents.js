@@ -44,3 +44,11 @@ export function getResidentsNum(data) {
     data
   })
 }
+
+export function getResidentsRank(data) {
+  return request({
+    url: '/api/residents/getResidentsRank',
+    method: 'post',
+    data
+  })
+}

@@ -168,6 +168,7 @@
 
     <el-card class="host-list" shadow="hover">
       <el-table
+        border
         :data="tableData"
         style="width: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
@@ -177,32 +178,27 @@
         <el-table-column
           prop="manager_name"
           label="姓名"
-          sortable
-          width="140"
         >
         </el-table-column>
         <el-table-column
           :prop="role == 'cm' ? 'cm_manager_sex' : 'ht_manager_sex'"
           label="性别"
-          width="140"
         >
         </el-table-column>
         <el-table-column
           :prop="role == 'cm' ? 'cm_manager_age' : 'ht_manager_age'"
           label="年龄"
-          width="140"
+          sortable
         >
         </el-table-column>
         <el-table-column
           :prop="role == 'cm' ? 'cm_manager_place' : 'ht_manager_place'"
           label="籍贯"
-          width="140"
         >
         </el-table-column>
         <el-table-column
           :prop="role == 'cm' ? 'cm_manager_position' : 'ht_manager_position'"
           label="职位/等级"
-          width="140"
         >
         </el-table-column>
         <el-table-column
@@ -217,7 +213,7 @@
           width="180"
         >
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="110">
+        <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small"
               >编辑</el-button

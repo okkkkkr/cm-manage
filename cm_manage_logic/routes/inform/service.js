@@ -3,12 +3,13 @@ var {initRES} = require('../../public/javascripts/res-model');
 const uuid = require('node-uuid');
 
 exports.getInform = async(req, res) => {
-    let senderName = req.body.role == 'cm' ? 'ht_name' : 'cm_name';
-    let tableName = req.body.role == 'cm' ? 'host' : 'community';
-    let sql_senderName = `SELECT ${senderName} FROM ${tableName} WHERE guid = ?`
-    let sql = `SELECT * FROM inform WHERE inform_receiver = ? AND inform_state = ?`
+    var senderName = req.body.role == 'cm' ? 'ht_name' : 'cm_name';
+    var tableName = req.body.role == 'cm' ? 'host' : 'community';
+    var sql_senderName = `SELECT ${senderName} FROM ${tableName} WHERE guid = ?`
+    var sql = `SELECT * FROM inform WHERE inform_receiver = ? AND inform_state = ?`
     // let sql = `SELECT `
     query(sql, [req.body.guid,req.body.state]).then(result => {
+        console.log("result",result)
         if(result.length == 0){
             res.send(initRES(200, "查询成功", result))
         }else{

@@ -66,8 +66,18 @@ exports.modifyResidents = async(req, res) => {
 // Delete
 // 删除居民信息
 exports.delResidents = async(req, res) => {
-    sqlDel = 'DELETE FROM cm_residents WHERE cm_residents_id = ?';
-    query(sqlDel, req.body.cm_residents_id).then(() => {
-        res.send(initRES(200, "居民搬离，信息已清理"));
+    sqlDel = 'UPDATE cm_residents SET cm_residents_state = ? WHERE cm_residents_id = ?';
+    query(sqlDel, ['0',req.body.cm_residents_id]).then(() => {
+        res.send(initRES(200, "居民搬离信息已登记！"));
+    })
+}
+
+exports.getResidentsRank = async(req, res) => {
+    let guid = req.body.guid
+    var sql = `SELECT * FROM cm_residents WHERE cm_guid = ? ORDER BY cm_residents_state desc LIMIT 10`
+    query(sql, guid)
+    .then(result => {
+        console.log(result)
+        res.send(initRES(200, '查询成功',result));
     })
 }

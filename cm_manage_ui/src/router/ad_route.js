@@ -88,7 +88,7 @@ export const adRoute = [
             path: 'order',
             name: 'Order',
             component: () => import('@/views/admin/activity_charge/order_info'),
-            meta: { title: '活动申办工单记录', icon: 'el-icon-s-operation', belong: 'ad' }
+            meta: { title: '项目委托工单记录', icon: 'el-icon-s-operation', belong: 'ad' }
           }
         ]
       },

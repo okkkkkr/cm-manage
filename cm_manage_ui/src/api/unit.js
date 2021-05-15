@@ -28,9 +28,9 @@ export function getActivityNum(data) {
 }
 
 // 承办方分页查看活动列表
-export function getHtActivity(data) {
+export function getHTActivity(data) {
   return request({
-    url: '/api/activity/ht/getActivity',
+    url: '/api/activity/ht/getHTActivity',
     method: 'post',
     data
   })

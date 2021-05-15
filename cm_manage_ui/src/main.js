@@ -4,6 +4,7 @@ import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import App from './App'
 import store from './store/index'
 import router from './router/routers'
+// import g2plot from '@antv/g2plot'
 // import 'jquery'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
@@ -25,14 +26,15 @@ if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
 
-const G2 = require('@antv/g2plot')
+// const G2 = require('@antv/g2plot')
+// Vue.prototype.$G2 = g2plot
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 Vue.config.productionTip = false
-Vue.prototype.$G2 = G2
+
 
 new Vue({
   el: '#app',

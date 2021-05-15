@@ -1,0 +1,225 @@
+<template>
+  <!-- 活动详情 -->
+  <div class="details-container">
+    <el-card class="box-card">
+      <el-row>
+        <el-col :span="11">
+          <div class="indicators">
+            <ul>
+              <li>
+                <el-avatar
+                  shape="square"
+                  :size="100"
+                  fit="fill"
+                  :src="detailInfo.community.cm_logo"
+                ></el-avatar>
+              </li>
+              <li class="unit-name">{{ detailInfo.community.cm_name }}</li>
+            </ul>
+          </div>
+        </el-col>
+        <el-col :span="2">
+          <div class="Icon">
+            <div class="img-wrapper">
+              <div class="dot"></div>
+              <div class="wave"></div>
+              <img
+                src="../../assets/images/activity_details/shakehands.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="11">
+          <div class="indicators">
+            <ul>
+              <li>
+                <el-avatar
+                  shape="square"
+                  :size="100"
+                  fit="fill"
+                  :src="detailInfo.host.ht_logo"
+                ></el-avatar>
+              </li>
+              <li class="unit-name">{{ detailInfo.host.ht_name }}</li>
+            </ul>
+          </div>
+        </el-col>
+      </el-row>
+    </el-card>
+
+    <div class="separator" style="height: 30px"></div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <span style="font-weight: bold; font-size: 20px; color: #409eff">
+        {{itemInfo.ac_items_name}}
+      </span>
+      <router-link v-if="role == 'ht'" :to="{path:'setActivityInfo',query:{itemData: itemInfo}}" replace>
+        <el-button type="primary">新增活动</el-button>
+      </router-link>
+    </div>
+
+    <div class="separator" style="height: 20px"></div>
+
+    <div class="block" style="margin-top: 10px">
+      <el-table :data="tableData" style="width: 100%; max-height: 500px" border>
+        <el-table-column prop="ac_name" label="活动名称" width="250">
+        </el-table-column>
+        <el-table-column
+          prop="ac_address"
+          label="活动地址/地点"
+          width="300"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_type"
+          label="活动类型"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_sign_up"
+          label="报名名额"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_fund"
+          label="活动投入资金（元）"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_begin_time"
+          label="活动开始时间"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="ac_end_time"
+          label="活动结束时间"
+          width="150"
+        >
+        </el-table-column>
+        <el-table-column prop="ac_publish" label="当前状态" width="150">
+          <template slot-scope="scope">
+            <div slot="reference" class="name-wrapper">
+              <el-tag
+                size="medium"
+                :type="scope.row.ac_publish == '0' ? 'danger' : 'success'"
+                >{{
+                  scope.row.ac_publish == "1" ? "报名中" : "已截至"
+                }}</el-tag
+              >
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="100" fixed="right">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="text" size="small"
+              >查看详情</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination
+        style="margin-top: 20px"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="page.pageNum"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="page.pageSize"
+        layout="total, sizes, prev, pager, next"
+        :total="page.total"
+      >
+      </el-pagination>
+    </div>
+  </div>
+</template>
+
+<script>
+import { getDetailByGuid, getActivityByGuid } from "@/api/activity";
+import { getLocal, setSession } from "@/utils/handleCache";
+import { getItemList } from "@/api/unit";
+
+export default {
+  data() {
+    return {
+      role: JSON.parse(getLocal("role")),
+      percent: 0,
+      detailInfo: {},
+      activityInfo: {},
+      tableData: [],
+      itemInfo: {
+        activity_items_id: "",
+        ac_items_name: "",
+      },
+      page: {
+        pageSize: 5,
+        pageNum: 1,
+        total: 0,
+      },
+    };
+  },
+
+  components: {},
+
+  computed: {},
+
+  created() {
+    console.log(this.$route);
+    this.itemInfo.activity_items_id = this.$route.params.activity_items_id;
+    this.itemInfo.ac_items_name = this.$route.params.ac_items_name;
+    this.getDetail(this.$route.params.activity_items_id);
+    this.getUnitList(this.$route.params.activity_items_id);
+  },
+
+  methods: {
+    getDetail(param) {
+      getDetailByGuid({ guid: param }).then((res) => {
+        this.detailInfo = res.data;
+        console.log(res.data);
+      });
+    },
+
+    getUnitList(guid) {
+      let param = {
+        pageNum: this.page.pageNum,
+        pageSize: this.page.pageSize,
+        guid: guid,
+      };
+      getActivityByGuid(param)
+        .then((res) => {
+          this.tableData = res.data;
+          this.page.total = res.total;
+        })
+        .catch((err) => {
+          notice("error", "数据加载出错");
+        });
+    },
+
+    // 列表操作
+    handleClick(row) {
+      let itemData = {
+        ...row,
+        ...this.itemInfo
+      };
+      console.log(itemData);
+      setSession('AcDetail', JSON.stringify(itemData))
+      this.$router.replace({ path: "activityInfo" });
+    },
+
+    handleSizeChange(val) {
+      this.page.pageSize = val;
+      this.getUnitList();
+    },
+    handleCurrentChange(val) {
+      this.page.pageNum = val;
+      this.getUnitList();
+    },
+  },
+};
+</script>
+<style lang='less' scoped>
+@import "../../styles/related/activity_info.less";
+</style>

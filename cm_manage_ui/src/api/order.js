@@ -31,3 +31,11 @@ export function changeOrderState(data){
         data
     })
 }
+
+export function updateOrder(data){
+    return request({
+        url: '/api/order/updateOrder',
+        method:'post',
+        data
+    })
+}

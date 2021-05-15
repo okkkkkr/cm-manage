@@ -11,10 +11,10 @@
                   shape="square"
                   :size="100"
                   fit="fill"
-                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                  :src="this.detailInfo.community.cm_logo"
                 ></el-avatar>
               </li>
-              <li class="unit-name">广东省珠海市香洲区唐家社区</li>
+              <li class="unit-name">{{ this.detailInfo.community.cm_name }}</li>
             </ul>
           </div>
         </el-col>
@@ -38,10 +38,10 @@
                   shape="square"
                   :size="100"
                   fit="fill"
-                  src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                  :src="detailInfo.host.ht_logo"
                 ></el-avatar>
               </li>
-              <li class="unit-name">北理珠青年志愿者协会</li>
+              <li class="unit-name">{{ detailInfo.host.ht_name }}</li>
             </ul>
           </div>
         </el-col>
@@ -53,97 +53,107 @@
     <el-card class="box-card">
       <p>
         <i class="el-icon-time"></i>
-        活动时间：<span style="color: #409eff" class="ac-content"
-          >2018/4/2 20:46</span
-        >
+        活动时间：<span style="color: #409eff" class="ac-content">{{
+          activityInfo.ac_begin_time || "待完善"
+        }}</span>
         &nbsp;<span class="ac-content">至</span>&nbsp;
-        <span style="color: #409eff" class="ac-content">2018/4/2 20:46</span>
+        <span style="color: #409eff" class="ac-content">{{
+          activityInfo.ac_end_time || "待完善"
+        }}</span>
       </p>
       <el-row class="activity_basic">
         <el-col :span="8">
           <p>
             <i class="el-icon-document"></i>
-            活动名称：<span class="ac-content">XXX活动</span>
+            活动名称：<span class="ac-content">{{
+              activityInfo.ac_name || "待完善"
+            }}</span>
           </p>
           <p style="padding-top: 15px">
-            <i class="el-icon-suitcase"></i>
-            依托项目：<span class="ac-content">XXX活动</span>
+            <i class="el-icon-document"></i>
+            活动类型：<span class="ac-content">{{
+              activityInfo.ac_type || "待完善"
+            }}</span>
           </p>
         </el-col>
         <el-col :span="8">
           <p>
             <i class="el-icon-place"></i>
-            活动地点：<span class="ac-content">XXX小区</span>
+            活动地点：<span class="ac-content">{{
+              activityInfo.ac_address || "待完善"
+            }}</span>
           </p>
           <p style="padding-top: 15px">
             <i class="el-icon-user"></i>
-            负责人（社区方）：<span class="ac-content">XXX</span>
+            活动负责人：<span class="ac-content">{{
+              activityInfo.ac_contact_name || "待完善"
+            }}</span>
           </p>
         </el-col>
         <el-col :span="8">
           <p>
             <i class="el-icon-loading"></i>
-            发布状态：<span class="ac-content">XXX广场</span>
+            发布状态：<span class="ac-content">{{
+              activityInfo.ac_publish == "0" ? "未发布" : "已发布"
+            }}</span>
           </p>
           <p style="padding-top: 15px">
             <i class="el-icon-user"></i>
-            负责人（承办方）：<span class="ac-content">XXX</span>
+            联系方式：<span class="ac-content">{{
+              activityInfo.ac_contact_phone || "待完善"
+            }}</span>
           </p>
         </el-col>
       </el-row>
       <p>
         <i class="el-icon-data-analysis"></i>
-        活动内容
+        活动介绍
       </p>
       <div class="ac-content" style="line-height: 24px">
-        Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue
-        被设计为可以自底向上逐层应用。Vue
-        的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。另一方面，当与现代化的工具链以及各种支持类库结合使用时，Vue
-        也完全能够为复杂的单页应用提供驱动。
+        {{ activityInfo.ac_introduce || "活动内容待完善" }}
       </div>
 
       <div class="separator" style="height: 20px"></div>
+      <router-link
+        :to="{ path: 'setActivityInfo', query: { detail: this.detailInfo } }"
+        replace
+      >
+        <el-button
+          v-show="activityInfo.ac_publish == '0' && role == 'ht'"
+          type="warning"
+          plain
+          >点击完善各项信息</el-button
+        >
+      </router-link>
 
-      <el-button type="warning" plain>活动已发布</el-button>
-
-      <el-row class="signUp">
+      <el-row class="signUp" v-if="activityInfo.ac_publish == '1'">
         <el-col :span="3"> <i class="el-icon-data-line"></i> 报名进度 </el-col>
         <el-col :span="18">
           <div>
             <el-progress
               :text-inside="true"
               :stroke-width="24"
-              :percentage="40"
-              status="success"
+              :percentage="percent"
+              :status="
+                percent <= 33
+                  ? 'success'
+                  : percent > 33 && percent <= 66
+                  ? 'warning'
+                  : 'exception'
+              "
             ></el-progress>
           </div>
         </el-col>
         <el-col :span="3" style="text-align: center">
-          <span class="ac-content">40</span>
+          <span class="ac-content">{{ activityInfo.ac_sign_up_ready }}</span>
           <span class="ac-content"> / </span>
-          <span class="ac-content">100</span>
+          <span class="ac-content">{{ activityInfo.ac_sign_up }}</span>
         </el-col>
       </el-row>
     </el-card>
 
     <div class="separator" style="height: 30px"></div>
     <div class="another-cont">
-      <el-card class="box-card">
-        <el-collapse accordion>
-          <el-collapse-item>
-            <template slot="title">
-              审核日志<i class="header-icon el-icon-info another-icon"></i>
-            </template>
-            <div>
-              与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；
-            </div>
-            <div>
-              在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
-            </div>
-          </el-collapse-item>
-        </el-collapse>
-      </el-card>
-
       <div class="separator" style="height: 10px"></div>
 
       <el-card class="box-card">
@@ -152,12 +162,37 @@
             <template slot="title">
               物资清单<i class="header-icon el-icon-info another-icon"></i>
             </template>
-            <div>
-              与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；
-            </div>
-            <div>
-              在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
-            </div>
+            <el-table :data="suppliesList" style="width: 100%" border>
+              <el-table-column
+                prop="ac_supplies_name"
+                label="物资名称"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="ac_supplies_unit"
+                label="物资单位"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="ac_supplies_num"
+                label="物资数量"
+              >
+              </el-table-column>
+              <el-table-column
+                prop="ac_supplies_price"
+                label="物资单价（元）"
+              >
+              </el-table-column>
+              <el-table-column label="合计（元）" width="100">
+                <template slot-scope="scope">
+                  <div slot="reference" class="name-wrapper">
+                    {{
+                      scope.row.ac_supplies_num * scope.row.ac_supplies_price
+                    }}
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -170,12 +205,14 @@
             <template slot="title">
               流程清单<i class="header-icon el-icon-info another-icon"></i>
             </template>
-            <div>
-              与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；
-            </div>
-            <div>
-              在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
-            </div>
+            <el-timeline>
+              <el-timeline-item
+                v-for="item in processList"
+                :key="item.ac_process_steps"
+                :timestamp="item.ac_process_title"
+              >
+              </el-timeline-item>
+            </el-timeline>
           </el-collapse-item>
         </el-collapse>
       </el-card>
@@ -184,16 +221,53 @@
 </template>
 
 <script>
+import { getDetailByGuid } from "@/api/activity";
+import { getLocal, getSession } from "@/utils/handleCache";
+
 export default {
   data() {
-    return {};
+    return {
+      role: JSON.parse(getLocal("role")),
+      percent: 0,
+      detailInfo: {},
+      activityInfo: {},
+    };
   },
 
   components: {},
 
-  computed: {},
+  computed: {
+    suppliesList: function () {
+      return this.detailInfo.ac_supplies;
+    },
 
-  methods: {},
+    processList: function(){
+      return this.detailInfo.ac_process;
+    }
+  },
+
+  created() {
+    this.activityInfo = JSON.parse(JSON.parse(getSession("AcDetail")));
+    if (this.activityInfo.ac_sign_up) {
+      this.percent =
+        Math.round(
+          (this.activityInfo.ac_sign_up_ready / this.activityInfo.ac_sign_up) * 100
+        );
+    }
+    this.getDetail(this.activityInfo);
+  },
+
+  methods: {
+    getDetail(item) {
+      getDetailByGuid({
+        guid: item.activity_items_id,
+        detailId: this.activityInfo.guid,
+      }).then((res) => {
+        this.detailInfo = res.data;
+        console.log(this.detailInfo);
+      });
+    },
+  },
 };
 </script>
 <style lang='less' scoped>

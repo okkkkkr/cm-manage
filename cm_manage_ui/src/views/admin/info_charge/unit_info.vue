@@ -89,6 +89,7 @@
 
     <el-card class="host-list" shadow="hover">
       <el-table
+      border
         :data="tableData"
         style="width: 100%"
         :default-sort="{ prop: 'guid', order: 'descending' }"
@@ -99,20 +100,17 @@
           :prop="this.unit == 'cm' ? 'cm_account' : 'ht_account'"
           label="登陆账号"
           sortable
-          width="180"
         >
         </el-table-column>
         <el-table-column
           :prop="this.unit == 'cm' ? 'cm_name' : 'ht_name'"
           label="名称"
           sortable
-          width="150"
         >
         </el-table-column>
         <el-table-column
           :prop="this.unit == 'cm' ? 'cm_phone' : 'ht_phone'"
           label="联系方式"
-          width="180"
         >
         </el-table-column>
         <el-table-column

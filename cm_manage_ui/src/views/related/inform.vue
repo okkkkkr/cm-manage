@@ -77,7 +77,7 @@
               ></i>
             </el-popconfirm>
           </div>
-          <div class="inform-content">
+          <div style="cursor: pointer;" @click="informJump()" class="inform-content">
             <p>
               发送人：<span style="font-weight: bold">{{
                 item.inform_person_name
@@ -166,6 +166,10 @@ export default {
             notice('sucess',`${this.informList[index].inform_id}状态切换为未读！`)
           }
         })
+    },
+
+    informJump(){
+      this.$router.push({path: '/process/order'})
     }
   },
 };

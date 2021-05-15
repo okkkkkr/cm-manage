@@ -1,25 +1,26 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar"/>
+    <hamburger
+      :is-active="sidebar.opened"
+      class="hamburger-container"
+      @toggleClick="toggleSideBar"
+    />
 
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img
-            :src="logo"
-            class="user-avatar"
-          />
+          <img v-if="logo" :src="logo" class="user-avatar" />
+          <img v-else src="../../assets/images/admin.png" class="user-avatar" />
           <div class="account-info">
             <div class="role">
-              {{role}}
+              {{ role || "管理员" }}
             </div>
-            <div class="name">{{name}}</div>
+            <div class="name">{{ name }}</div>
           </div>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          
           <router-link to="/">
             <el-dropdown-item divided> 注销登录 </el-dropdown-item>
           </router-link>
@@ -36,7 +37,7 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
-import {getLocal} from '@/utils/handleCache'
+import { getLocal } from "@/utils/handleCache";
 
 export default {
   components: {
@@ -48,9 +49,19 @@ export default {
   },
   data() {
     return {
-      name: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_name || JSON.parse(JSON.parse(getLocal('unitInfo'))).ht_name,
-      logo: JSON.parse(JSON.parse(getLocal('unitInfo'))).cm_logo || JSON.parse(JSON.parse(getLocal('unitInfo'))).ht_logo,
-      role: JSON.parse(getLocal('role')) == 'cm' ? '社区方':'承办方'
+      name:
+        JSON.parse(JSON.parse(getLocal("unitInfo"))).cm_name ||
+        JSON.parse(JSON.parse(getLocal("unitInfo"))).ht_name ||
+        JSON.parse(JSON.parse(getLocal("unitInfo"))).admin_name,
+      logo:
+        JSON.parse(JSON.parse(getLocal("unitInfo"))).cm_logo ||
+        JSON.parse(JSON.parse(getLocal("unitInfo"))).ht_logo,
+      role:
+        JSON.parse(getLocal("role")) == "cm"
+          ? "社区方"
+          : JSON.parse(getLocal("role")) == "ht"
+          ? "承办方"
+          : "管理员",
     };
   },
   methods: {
@@ -124,18 +135,18 @@ export default {
         margin-top: 5px;
         position: relative;
 
-        .account-info{
+        .account-info {
           display: inline-block;
           margin-left: 5px;
 
-          .role{
+          .role {
             line-height: 25px;
             font-size: 16px;
             font-weight: bold;
           }
 
-          .name{
-            line-height: 20px
+          .name {
+            line-height: 20px;
           }
         }
 

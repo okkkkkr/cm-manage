@@ -1,5 +1,12 @@
 <template>
   <div class="login-container">
+    <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 250px; ;margin: 10px; position: fixed;"
+        @click.native.prevent="masses()"
+        >模拟普通群众入口</el-button>
+
     <video src="../../assets/bg.mp4" loop muted autoplay id="bg-video"></video>
     <el-form
       ref="loginForm"
@@ -56,9 +63,7 @@
         type="success"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >登 录</el-button
-      >
-
+        >登 录</el-button>
       <div class="tips">智慧社区不是喊口号，落地才是硬道理！</div>
     </el-form>
   </div>
@@ -145,6 +150,10 @@ export default {
         }
       });
     },
+
+    masses(){
+      this.$router.push({path: '/sign-up'})
+    }
   },
 };
 </script>

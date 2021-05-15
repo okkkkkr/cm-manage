@@ -110,23 +110,24 @@
 
     <el-card class="host-list" shadow="hover">
       <el-table
+        border
         :data="tableData"
         style="width: 100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
-        <el-table-column prop="admin_id" label="管理员账号" width="180">
+        <el-table-column prop="_id" label="管理员账号">
         </el-table-column>
-        <el-table-column prop="admin_name" label="姓名" sortable width="180">
+        <el-table-column prop="admin_name" label="姓名" sortable>
         </el-table-column>
-        <el-table-column prop="admin_age" label="年龄" width="180">
+        <el-table-column prop="admin_age" label="年龄">
         </el-table-column>
-        <el-table-column prop="admin_sex" label="性别" width="180">
+        <el-table-column prop="admin_sex" label="性别">
         </el-table-column>
-        <el-table-column prop="admin_place" label="籍贯" width="180">
+        <el-table-column prop="admin_place" label="籍贯">
         </el-table-column>
-        <el-table-column prop="admin_phone" label="联系方式" width="180">
+        <el-table-column prop="admin_phone" label="联系方式">
         </el-table-column>
-        <el-table-column prop="admin_card" label="身份证号码" width="180">
+        <el-table-column prop="admin_card" label="身份证号码">
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
