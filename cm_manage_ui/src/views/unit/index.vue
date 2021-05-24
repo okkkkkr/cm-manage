@@ -177,7 +177,7 @@
       </div>
 
       <div class="block" style="margin-top: 10px;">
-      <el-table :data="tableData" style="width: 100%; max-height: 500px" border>
+      <el-table :data="tableData" style="width: 100%;" border>
         <el-table-column prop="activity_items_id" label="项目ID" width="300">
         </el-table-column>
         <el-table-column prop="ac_items_name" label="项目名称" width="300">
@@ -191,12 +191,14 @@
         <el-table-column
           prop="ac_items_bid_time"
           label="项目申办日期"
+          sortable
           width="150"
         >
         </el-table-column>
         <el-table-column
           prop="ac_items_end_time"
           label="项目结束日期"
+          sortable
           width="150"
         >
         </el-table-column>

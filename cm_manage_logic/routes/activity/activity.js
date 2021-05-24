@@ -12,7 +12,7 @@ activity.post('/getCMActivity', item.getCMActivity) // 根据社区方GUID查看
 activity.post('/getActivityByGuid', item.getActivityByGuid) // 根据活动GUID查看活动列表
 activity.post('/getDetailByGuid', item.getDetailByGuid, item.getCommunityByGuid, item.getHostByGuid, item.getSuppliesByGuid, item.getProcessByGuid) // 根据活动GUID查看活动列表
 activity.post('/getACDetailByGuid', item.getACDetailByGuid) // 根据活动详情guid获取活动详细信息
-
+    
 activity.post('/addActivity', item.addItem, item.addActivity, item.addOrder, item.addInform) // 新增项目
 activity.post('/addAcDetails', item.addAcDetails) // 新增活动
 activity.post('/addAcSupplies', item.addAcSupplies) // 新增活动物资

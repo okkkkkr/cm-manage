@@ -9,14 +9,14 @@
         <span class="host-title">活动审核</span>
       </p>
       <el-row :gutter="50">
-          <el-col :span="4">
-              <el-input
+        <el-col :span="4">
+          <el-input
             placeholder="活动名称检索"
             prefix-icon="el-icon-search"
             v-model="input2"
           >
           </el-input>
-          </el-col>
+        </el-col>
         <el-col :span="4">
           <el-input
             placeholder="个体名称检索"
@@ -33,7 +33,6 @@
           >
           </el-input>
         </el-col>
-        
       </el-row>
     </el-card>
 
@@ -48,11 +47,21 @@
         </el-table-column>
         <el-table-column prop="ac_type" label="活动类型" sortable>
         </el-table-column>
-        <el-table-column prop="ac_begin_time" label="开始时间" sortable width="200">
+        <el-table-column
+          prop="ac_begin_time"
+          label="开始时间"
+          sortable
+          width="200"
+        >
         </el-table-column>
-        <el-table-column prop="ac_end_time" label="结束时间" sortable width="200">
+        <el-table-column
+          prop="ac_end_time"
+          label="结束时间"
+          sortable
+          width="200"
+        >
         </el-table-column>
-         <el-table-column prop="ac_contact_name" label="活动联系人">
+        <el-table-column prop="ac_contact_name" label="活动联系人">
         </el-table-column>
         <el-table-column prop="ac_contact_phone" label="联系电话">
         </el-table-column>
@@ -61,8 +70,22 @@
         <el-table-column prop="audit_state" label="审核状态">
           <template slot-scope="scope">
             <el-tag
-              :type="scope.row.tag == '-1' ? 'danger ' : scope.row.tag == '0' ? 'warning' : 'success'"
-              disable-transitions>{{scope.row.tag == '-1' ? '已拒绝 ' : scope.row.tag == '0' ? '待审核' : '已通过'}}</el-tag>
+              :type="
+                scope.row.tag == '-1'
+                  ? 'danger '
+                  : scope.row.tag == '0'
+                  ? 'warning'
+                  : 'success'
+              "
+              disable-transitions
+              >{{
+                scope.row.tag == "-1"
+                  ? "已拒绝 "
+                  : scope.row.tag == "0"
+                  ? "待审核"
+                  : "已通过"
+              }}</el-tag
+            >
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
@@ -81,7 +104,7 @@
         :page-sizes="[10, 20, 30, 50]"
         :page-size="10"
         layout="total, sizes, prev, pager, next"
-        :total="3"
+        :total="1"
       >
       </el-pagination>
     </el-card>
@@ -92,19 +115,19 @@
 export default {
   data() {
     return {
-      input2:'',
+      input2: "",
       currentPage: 1,
       tableData: [
         {
-          ac_name:"test1的活动",
-          ac_type:"教育活动",
-          ac_begin_time:"2021-05-11T06:00:00.000Z",
-          ac_end_time:"2021-05-11T10:00:00.000Z",
-          ac_contact_name:"张三",
-          ac_contact_phone:"13169608945",
-          ac_address:"test1的活动地址",
-          audit_state:'0'
-        }
+          ac_name: "test1的活动",
+          ac_type: "教育活动",
+          ac_begin_time: "2021-05-11T06:00:00.000Z",
+          ac_end_time: "2021-05-11T10:00:00.000Z",
+          ac_contact_name: "张三",
+          ac_contact_phone: "13169608945",
+          ac_address: "test1的活动地址",
+          audit_state: "0",
+        },
       ],
     };
   },
@@ -128,5 +151,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
- @import '../../../styles/admin/activity_audit.less';
+@import "../../../styles/admin/activity_audit.less";
 </style>

@@ -1,6 +1,10 @@
 <template>
   <!-- 活动详情 -->
   <div class="details-container">
+    <el-row>
+  <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
+  <el-col :span="12"><div class="grid-content bg-purple-light"></div></el-col>
+</el-row>
     <el-card class="box-card">
       <el-row>
         <el-col :span="11">
@@ -193,5 +197,5 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-  @import '../../../styles/admin/activity_details.less';
+@import "../../../styles/admin/activity_details.less";
 </style>

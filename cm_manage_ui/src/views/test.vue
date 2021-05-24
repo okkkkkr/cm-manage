@@ -53,6 +53,7 @@ export default {
   },
   created(){
     testGetActivity().then(res => {
+      console.log(res)
       this.hostList = res.data
     })
   },

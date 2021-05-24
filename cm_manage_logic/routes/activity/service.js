@@ -341,19 +341,20 @@ exports.updateDetailState = async(req, res) => {
     })
 }
 
-//根据guid查看活动细节
-exports.getACDetailByGuid = async(req, res) =>{
-    sql =  `SELECT * FROM activity_details WHERE guid = ?`
-    query(sql, req.body.guid).then(result => {
-        res.send(initRES(200, "查询成功", result[0]))
-    })
-}
-
 // 根据项目guid修改项目状态
 exports.updateItemState = async(req, res) => {
     sql = `UPDATE activity_items SET ac_items_state = ? WHERE activity_items_id = ?`
     query(sql, [req.body.state, req.body.guid]).then(result => {
         res.send(initRES(200, "项目状态更新"))
+    })
+}
+
+
+//根据guid查看活动细节
+exports.getACDetailByGuid = async(req, res) =>{
+    sql =  `SELECT * FROM activity_details WHERE guid = ?`
+    query(sql, req.body.guid).then(result => {
+        res.send(initRES(200, "查询成功", result[0]))
     })
 }
 

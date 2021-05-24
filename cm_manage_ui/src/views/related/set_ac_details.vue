@@ -128,10 +128,10 @@
             :before-remove="beforeRemove"
             :limit="5"
           >
-            <el-button slot="trigger" size="middle" type="primary" :disabled="!disabled ? 'true':'false'"
+            <el-button slot="trigger" size="middle" type="primary"
               >点击上传</el-button
             >
-            <div slot="tip" class="el-upload__tip" >
+            <div slot="tip" class="el-upload__tip">
               只能上传jpg/png文件，且图片大小不超过2M / 张
             </div>
           </el-upload>
@@ -214,15 +214,15 @@
       </div>
 
       <el-table :data="suppliesList" style="width: 100%" border>
-        <el-table-column prop="ac_supplies_name" label="物资名称" width="180">
+        <el-table-column prop="ac_supplies_name" label="物资名称">
         </el-table-column>
-        <el-table-column prop="ac_supplies_unit" label="物资单位" width="100">
+        <el-table-column prop="ac_supplies_unit" label="物资单位">
         </el-table-column>
-        <el-table-column prop="ac_supplies_num" label="物资数量" width="100">
+        <el-table-column prop="ac_supplies_num" label="物资数量">
         </el-table-column>
-        <el-table-column prop="ac_supplies_price" label="物资单价" width="100">
+        <el-table-column prop="ac_supplies_price" label="物资单价">
         </el-table-column>
-        <el-table-column label="合计（元）" width="100">
+        <el-table-column label="合计（元）">
           <template slot-scope="scope">
             <div slot="reference" class="name-wrapper">
               {{ scope.row.ac_supplies_num * scope.row.ac_supplies_price }}
@@ -306,7 +306,7 @@
 <script>
 import { getLocal, setLocal } from "../../utils/handleCache";
 import { getTypeList } from "@/api/related";
-import { addAcDetails,addAcSupplies,addAcProcess } from "@/api/activity";
+import { addAcDetails, addAcSupplies, addAcProcess } from "@/api/activity";
 import { delImage } from "@/api/files";
 import { notice } from "../../utils/message";
 import { mapGetters } from "vuex";
@@ -387,7 +387,7 @@ export default {
         ac_supplies_num: "",
         ac_supplies_price: "",
         ac_supplies_remain: "",
-        ac_guid: ""
+        ac_guid: "",
       },
       suppliesList: [],
 
@@ -395,7 +395,7 @@ export default {
         _id: this.$route.query.itemData.activity_items_id,
       },
       acType: [],
-      ac_detail_guid:'',
+      ac_detail_guid: "",
 
       detailFlag: true,
       processFlag: true,
@@ -404,7 +404,7 @@ export default {
       insertSp: true,
       detailSubmit: false,
       processSubmit: true,
-      suppliesSubmit: true
+      suppliesSubmit: true,
     };
   },
 
@@ -436,8 +436,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           addAcDetails(this.orderInfo).then((res) => {
-            notice('success', res.message)
-            this.ac_detail_guid = res.data
+            notice("success", res.message);
+            this.ac_detail_guid = res.data;
             this.detailSubmit = true;
           });
         } else {
@@ -447,11 +447,11 @@ export default {
       });
     },
 
-    submitOrNot(type){
-      if(this.detailSubmit){
-        this.submitList(type)
-      }else{
-        notice('warning','请先创建并发布活动')
+    submitOrNot(type) {
+      if (this.detailSubmit) {
+        this.submitList(type);
+      } else {
+        notice("warning", "请先创建并发布活动");
       }
     },
 
@@ -465,28 +465,28 @@ export default {
           notice("warning", "请填写三个或以上活动流程后提交！");
         } else {
           this.processList.forEach((item, index) => {
-            item.ac_guid = this.ac_detail_guid
-            if(index == this.processList.length - 1){
-              addAcProcess(this.processList).then(res => {
-                notice('success', res.message)
+            item.ac_guid = this.ac_detail_guid;
+            if (index == this.processList.length - 1) {
+              addAcProcess(this.processList).then((res) => {
+                notice("success", res.message);
                 this.processSubmit = false;
-              })
+              });
             }
-          })
+          });
         }
       } else {
         if (this.suppliesList.length == 0) {
           notice("warning", "请填写活动相关物资后提交！");
         } else {
           this.suppliesList.forEach((item, index) => {
-            item.ac_guid = this.ac_detail_guid
-            if(index == this.suppliesList.length - 1){
-              addAcSupplies(this.suppliesList).then(res => {
-                notice('success', res.message)
+            item.ac_guid = this.ac_detail_guid;
+            if (index == this.suppliesList.length - 1) {
+              addAcSupplies(this.suppliesList).then((res) => {
+                notice("success", res.message);
                 this.suppliesSubmit = false;
-              })
+              });
             }
-          })
+          });
         }
       }
     },
@@ -544,7 +544,7 @@ export default {
         newObj.ac_process_steps = this.processList.length + 1;
         newObj.ac_process_title = this.processValue;
         this.processValue = "";
-        
+
         this.processList.push(newObj);
       }
       this.insertFlag = true;
